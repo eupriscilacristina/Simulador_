@@ -473,6 +473,59 @@ table .neu { color: var(--neutral); }
     margin: 16px 0;
 }
 
+.card-leia-me {
+    background: linear-gradient(135deg, rgba(0,212,255,0.03), rgba(0,212,255,0.01));
+    border: 1px solid rgba(0,212,255,0.15);
+}
+
+.leia-me-content {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text);
+}
+
+.leia-me-section {
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(0,212,255,0.1);
+}
+
+.leia-me-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.leia-me-section h4 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.leia-me-section p {
+    margin-bottom: 6px;
+}
+
+.leia-me-section ul {
+    padding-left: 20px;
+    margin: 6px 0;
+}
+
+.leia-me-section li {
+    margin-bottom: 4px;
+}
+
+.leia-me-aviso {
+    background: rgba(243,156,18,0.08);
+    border: 1px solid rgba(243,156,18,0.3);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    margin-top: 12px;
+}
+
 @media (max-width: 768px) {
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .result-grid { grid-template-columns: 1fr; }
