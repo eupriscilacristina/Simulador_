@@ -52,9 +52,9 @@ body {
 }
 
 .header-logo {
-    height: 48px;
+    height: 30px;
     width: auto;
-    border-radius: 6px;
+    border-radius: 4px;
 }
 
 .app-header h1 {
