@@ -147,8 +147,8 @@ body {
     background: var(--bg-card);
     border: 1px solid rgba(0,212,255,0.1);
     border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 16px;
+    padding: 24px 28px;
+    margin-bottom: 18px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
@@ -176,15 +176,15 @@ body {
 .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
 
 .form-group {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .form-group label {
     display: block;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--text-muted);
-    margin-bottom: 4px;
+    margin-bottom: 5px;
 }
 
 .form-group label .hint {
@@ -197,10 +197,10 @@ body {
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 8px 10px;
+    padding: 9px 12px;
     border: 1px solid var(--input-border);
     border-radius: var(--radius-sm);
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     background: var(--input-bg);
     color: var(--text);
     transition: border-color 0.2s;
