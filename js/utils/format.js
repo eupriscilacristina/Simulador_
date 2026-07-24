@@ -14,12 +14,12 @@ Simulador.Format = {
 
     percentual: function(valor, casas) {
         casas = casas || 2;
-        if (valor === null || valor === undefined || isNaN(valor)) return "0%";
+        if (valor === null || valor === undefined || isNaN(valor)) return "0,00%";
         return (valor * 100).toFixed(casas).replace(".", ",") + "%";
     },
 
     percentual4: function(valor) {
-        return this.percentual(valor, 4);
+        return this.percentual(valor, 2);
     },
 
     numero: function(valor, casas) {

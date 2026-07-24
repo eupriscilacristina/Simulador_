@@ -307,169 +307,142 @@
         <!-- ==================== TAB DESPESAS ==================== -->
         <div id="tab-despesas" class="tab-content">
             <div class="alert alert-info">
-                Credito = Valor x (S/N) x % fornecedor regime regular x (1 - reducao cClassTrib do fornecedor) x alquota IBS/CBS vigente no ano.
-                Fornecedor do Simples por dentro transfere credito parcial.
+                Credito = Valor x (S/N) x % fornecedor regime regular x (1 - reducao cClassTrib do fornecedor) x aliquota IBS/CBS vigente no ano (Cen2). Fornecedor com cClassTrib reduzido destaca menos imposto -> credito menor. Fornecedor do Simples por dentro transfere so o valor pago no DAS (ajuste na coluna % fornecedor regime regular).
             </div>
             <div id="despesas-content"></div>
         </div>
 
         <!-- ==================== TAB CENARIO 1 ==================== -->
         <div id="tab-cen1" class="tab-content">
-            <div class="alert alert-info">
-                <strong>Cenario 1 - Simples Integral:</strong> IBS/CBS recolhidos por dentro do PGDAS-D.
-                As reducoes do cClassTrib NAO se aplicam por dentro do PGDAS - o DAS nao muda.
-                Credito do adquirente limitado ao IBS/CBS efetivamente pago no DAS.
-            </div>
             <div id="cen1-content"></div>
-            <div class="destaque-box">
-                <div class="rotulo">DAS Total Mensal - Cenario 1</div>
-                <div class="valor-grande" id="cen1-das-total">R$ 0,00</div>
-            </div>
-            <div class="grid-2">
-                <div class="result-card">
-                    <div class="label">Credito IBS/CBS gerado a clientes B2B (R$/mes)</div>
-                    <div class="value" id="cen1-credito-b2b">R$ 0,00</div>
-                </div>
-            </div>
         </div>
 
         <!-- ==================== TAB CENARIO 2 ==================== -->
         <div id="tab-cen2" class="tab-content">
-            <div class="alert alert-info">
-                <strong>Cenario 2 - Hibrido:</strong> DAS reduzido (sem parcela CBS/IBS) + debito IBS/CBS por fora com reducoes do cClassTrib
-                + creditos sobre despesas detalhadas.
-            </div>
             <div id="cen2-content"></div>
-
-            <div class="result-grid">
-                <div class="result-card">
-                    <div class="label">DAS Total Reduzido</div>
-                    <div class="value" id="cen2-das-total">R$ 0,00</div>
-                </div>
-                <div class="result-card">
-                    <div class="label">Debito Total IBS/CBS por fora</div>
-                    <div class="value" id="cen2-debito">R$ 0,00</div>
-                </div>
-                <div class="result-card">
-                    <div class="label">Credito s/ Despesas</div>
-                    <div class="value" id="cen2-credito-despesas">R$ 0,00</div>
-                </div>
-            </div>
-
-            <div class="destaque-box">
-                <div class="rotulo">IBS/CBS a Recolher</div>
-                <div class="valor-grande" id="cen2-ibs-cbs-recolher">R$ 0,00</div>
-            </div>
-
-            <div class="grid-3" style="margin-top:12px">
-                <div class="result-card">
-                    <div class="label">Saldo Credor</div>
-                    <div class="value" id="cen2-saldo-credor">R$ 0,00</div>
-                </div>
-                <div class="result-card">
-                    <div class="label">CARGA TOTAL MENSAL - HIBRIDO</div>
-                    <div class="value" style="color:var(--primary-dark)" id="cen2-carga-total">R$ 0,00</div>
-                </div>
-                <div class="result-card">
-                    <div class="label">Credito B2B (R$/mes)</div>
-                    <div class="value" id="cen2-credito-b2b">R$ 0,00</div>
-                </div>
-            </div>
         </div>
 
         <!-- ==================== TAB COMPARATIVO ==================== -->
         <div id="tab-comparativo" class="tab-content">
+            <!-- Dados da Simulacao -->
             <div class="card">
                 <div class="card-title">Dados da Simulacao</div>
                 <div class="grid-3">
-                    <div class="result-item">
-                        <div class="label">Cliente</div>
-                        <div class="value" id="comp-cliente" style="font-size:1rem">-</div>
+                    <div class="form-group">
+                        <label>Cliente</label>
+                        <div class="resultado-campo" id="comp-cliente">-</div>
                     </div>
-                    <div class="result-item">
-                        <div class="label">Ano</div>
-                        <div class="value" id="comp-ano" style="font-size:1rem">-</div>
+                    <div class="form-group">
+                        <label>Ano da simulacao</label>
+                        <div class="resultado-campo" id="comp-ano">-</div>
                     </div>
-                    <div class="result-item">
-                        <div class="label">RBT12</div>
-                        <div class="value" id="comp-rbt12" style="font-size:1rem">-</div>
+                    <div class="form-group">
+                        <label>RBT12 - Receita bruta acumulada 12 meses (R$)</label>
+                        <div class="resultado-campo" id="comp-rbt12">-</div>
                     </div>
                 </div>
             </div>
 
+            <!-- Tabela Comparativa -->
             <div class="card">
-                <div class="card-title">Comparativo Detalhado</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width:40%">Indicador</th>
-                            <th style="width:20%;text-align:right">Cenario 1 - PGDAS</th>
-                            <th style="width:20%;text-align:right">Cenario 2 - Hibrido</th>
-                            <th style="width:20%;text-align:right">Diferenca (C2 - C1)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Carga propria - MENSAL</strong></td>
-                            <td class="num" id="comp-carga-mensal-c1">-</td>
-                            <td class="num" id="comp-carga-mensal-c2">-</td>
-                            <td class="num" id="comp-diff-mensal">-</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Carga propria - ANUAL</strong></td>
-                            <td class="num" id="comp-carga-anual-c1">-</td>
-                            <td class="num" id="comp-carga-anual-c2">-</td>
-                            <td class="num" id="comp-diff-anual">-</td>
-                        </tr>
-                        <tr>
-                            <td>Carga propria em % da receita</td>
-                            <td class="num" id="comp-perc-c1">-</td>
-                            <td class="num" id="comp-perc-c2">-</td>
-                            <td class="num" id="comp-diff-perc">-</td>
-                        </tr>
-                        <tr>
-                            <td>Credito IBS/CBS gerado a clientes B2B (R$/mes)</td>
-                            <td class="num" id="comp-cred-c1">-</td>
-                            <td class="num" id="comp-cred-c2">-</td>
-                            <td class="num" id="comp-diff-cred">-</td>
-                        </tr>
-                        <tr class="subtotal">
-                            <td><strong>CARGA LIQUIDA NA CADEIA (propria - credito B2B)</strong></td>
-                            <td class="num" id="comp-liq-c1">-</td>
-                            <td class="num" id="comp-liq-c2">-</td>
-                            <td class="num" id="comp-diff-liq">-</td>
-                        </tr>
-                        <tr>
-                            <td>Alq. IBS/CBS destacada na NF - Ativ. 1</td>
-                            <td class="num" id="comp-aliq-nf-c1">-</td>
-                            <td class="num" id="comp-aliq-nf-c2">-</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Saldo credor mensal no hibrido</td>
-                            <td class="num">n/a</td>
-                            <td class="num" id="comp-saldo-credor">-</td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="card-title">Comparativo e Decisao Estrategica</div>
+                <div style="overflow-x:auto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:40%">Indicador</th>
+                                <th style="width:20%;text-align:right">CENARIO 1 - Tudo no PGDAS</th>
+                                <th style="width:20%;text-align:right">CENARIO 2 - Hibrido (por fora)</th>
+                                <th style="width:20%;text-align:right">Diferenca (C2 - C1)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Carga tributaria propria - MENSAL (R$)</td>
+                                <td class="num" id="comp-carga-mensal-c1">-</td>
+                                <td class="num" id="comp-carga-mensal-c2">-</td>
+                                <td class="num" id="comp-diff-mensal">-</td>
+                            </tr>
+                            <tr>
+                                <td>Carga tributaria propria - ANUAL (R$)</td>
+                                <td class="num" id="comp-carga-anual-c1">-</td>
+                                <td class="num" id="comp-carga-anual-c2">-</td>
+                                <td class="num" id="comp-diff-anual">-</td>
+                            </tr>
+                            <tr>
+                                <td>Carga propria em % da receita</td>
+                                <td class="num" id="comp-perc-c1">-</td>
+                                <td class="num" id="comp-perc-c2">-</td>
+                                <td class="num" id="comp-diff-perc">-</td>
+                            </tr>
+                            <tr>
+                                <td>Credito de IBS/CBS gerado a clientes B2B (R$/mes)</td>
+                                <td class="num" id="comp-cred-c1">-</td>
+                                <td class="num" id="comp-cred-c2">-</td>
+                                <td class="num" id="comp-diff-cred">-</td>
+                            </tr>
+                            <tr class="subtotal">
+                                <td><strong>CARGA LIQUIDA NA CADEIA (propria - credito B2B)</strong></td>
+                                <td class="num" id="comp-liq-c1">-</td>
+                                <td class="num" id="comp-liq-c2">-</td>
+                                <td class="num" id="comp-diff-liq">-</td>
+                            </tr>
+                            <tr>
+                                <td>Aliq. IBS/CBS destacada na NF - Atividade 1</td>
+                                <td class="num" id="comp-aliq-nf-c1">por dentro</td>
+                                <td class="num" id="comp-aliq-nf-c2">-</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Aliq. IBS/CBS destacada na NF - Atividade 2</td>
+                                <td class="num">por dentro</td>
+                                <td class="num" id="comp-aliq-nf-c2b">-</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Saldo credor mensal no hibrido (se houver)</td>
+                                <td class="num">n/a</td>
+                                <td class="num" id="comp-saldo-credor">-</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="help-text" style="margin-top:8px">Valores negativos na coluna Diferenca = hibrido melhor.</div>
             </div>
 
-            <div class="destaque-box recomendacao">
-                <div class="rotulo">RECOMENDACAO</div>
-                <div id="comp-recomendacao" style="font-size:1.1rem;font-weight:600;color:var(--primary-dark);margin-top:4px">-</div>
+            <!-- Leitura dos Resultados -->
+            <div class="card">
+                <div class="card-title">Leitura dos Resultados</div>
+                <div class="grid-2" style="margin-bottom:12px">
+                    <div class="form-group">
+                        <label>Qual cenario custa menos PARA A EMPRESA?</label>
+                        <div class="resultado-campo" id="comp-melhor-empresa">-</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Qual cenario custa menos PARA A CADEIA?</label>
+                        <div class="resultado-campo" id="comp-melhor-cadeia">-</div>
+                    </div>
+                </div>
             </div>
 
+            <!-- Recomendacao -->
+            <div class="destaque-box recomendacao">
+                <div class="rotulo">RECOMENDACAO</div>
+                <div id="comp-recomendacao" style="font-size:1rem;font-weight:600;color:white;margin-top:6px">-</div>
+            </div>
+
+            <!-- Drivers da Decisao -->
             <div class="card">
-                <div class="card-title">Drivers da Decisao</div>
+                <div class="card-title">Drivers da Decisao (teste nas abas Dados e Despesas)</div>
                 <ul style="font-size:0.82rem;line-height:1.8;padding-left:20px">
-                    <li><strong>Melhor cenario (carga propria):</strong> <span id="comp-melhor" style="font-weight:700;color:var(--primary-dark)">-</span></li>
-                    <li>cClassTrib com reducao (30%/60%) ou alquota zero nas VENDAS so beneficia quem esta POR FORA: derruba o debito do hibrido, mantem os creditos das compras e pode gerar saldo credor.</li>
-                    <li>maior % vendas B2B para regime regular e mais despesas com credito favorecem o HIBRIDO.</li>
-                    <li>maior vendas B2C, maior margem (pouco insumo) e cClassTrib integral (000001) favorecem o PGDAS.</li>
-                    <li>Receitas segregadas (ST/monofasico) perdem o beneficio gradualmente no Cenario 1 - recalcule a cada ano.</li>
-                    <li>A opcao pelo regime regular e irretratavel para o ano-calendario: simule antes do prazo.</li>
+                    <li>cClassTrib com reducao (30%/60%) ou aliquota zero nas VENDAS so beneficia quem esta POR FORA: derruba o debito do hibrido, mantem os creditos das compras e pode gerar saldo credor.</li>
+                    <li>Maior % vendas B2B para regime regular e mais despesas com credito favorecem o HIBRIDO.</li>
+                    <li>Maior vendas B2C, maior margem (pouco insumo) e cClassTrib integral (000001) favorecem o PGDAS.</li>
+                    <li>Receitas segregadas (ST/monofasico) perdem o beneficio gradualmente no Cenario 1 - recalcule a cada ano da transicao (2027-2033).</li>
+                    <li>Bares e restaurantes (regime especifico - arts. 273-276): use o codigo RED-40-BAR-REST (red. 40%), marque 'N' em 'vendas geram credito ao adquirente' e lance gorjetas repassadas/retencoes de delivery nas exclusoes da base.</li>
+                    <li>Confira as vedacoes de credito (uso e consumo pessoal - art. 57) e a reducao do cClassTrib dos FORNECEDORES: comprar de quem vende com reducao tambem reduz seu credito.</li>
+                    <li>A opcao pelo regime regular de IBS/CBS e irretratavel para o ano-calendario: simule antes do prazo de opcao de cada ano.</li>
                 </ul>
             </div>
         </div>

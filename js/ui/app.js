@@ -557,73 +557,151 @@ Simulador.App = {
         var res = this.cen1Resultado;
         var html = "";
 
-        for (var i = 0; i < res.atividades.length; i++) {
-            var at = res.atividades[i];
-            html += '<div class="card">';
-            html += '<div class="activity-header"><span class="activity-tag ' + (i === 0 ? 'ativ1' : 'ativ2') + '">' + at.nome + '</span></div>';
-            html += '<div class="grid-4">';
-            html += this.resultItem("Anexo", at.anexo);
-            html += this.resultItem("Receita Mensal", Simulador.Format.moeda(at.receitaTotal));
-            html += this.resultItem("Alq. Nominal", Simulador.Format.percentual(at.aliqNominal));
-            html += this.resultItem("Alq. Efetiva", Simulador.Format.percentual4(at.aliqEfetiva));
-            html += '</div>';
-            html += '<div class="divider"></div>';
-            html += '<div class="grid-4">';
-            html += this.resultItem("Receita s/ concentracao", Simulador.Format.moeda(at.receitaSemConcentracao));
-            html += this.resultItem("Receita ST", Simulador.Format.moeda(at.receitaST));
-            html += this.resultItem("Alq. DAS s/ normal", Simulador.Format.percentual4(at.aliqDasNormal));
-            html += this.resultItem("Alq. DAS s/ ST", Simulador.Format.percentual4(at.aliqDasST));
-            html += '</div>';
-            html += '<div class="grid-3">';
-            html += this.resultItem("DAS Mensal", Simulador.Format.moeda(at.dasTotal), true);
-            html += this.resultItem("Credito total", Simulador.Format.moeda(at.creditoTotal));
-            html += this.resultItem("Credito B2B", Simulador.Format.moeda(at.creditoB2B));
-            html += '</div>';
-            html += '</div>';
-        }
+        html += '<div class="alert alert-info">';
+        html += '<strong>Cenario 1 - Simples Integral:</strong> IBS/CBS recolhidos por dentro do PGDAS-D.';
+        html += ' As reducoes do cClassTrib NAO se aplicam por dentro do PGDAS - o DAS nao muda.';
+        html += ' Credito do adquirente limitado ao IBS/CBS efetivamente pago no DAS.';
+        html += '</div>';
+
+        // Tabela principal
+        html += '<div class="card">';
+        html += '<div class="card-title">Apuracao por Atividade</div>';
+        html += '<div style="overflow-x:auto">';
+        html += '<table>';
+        html += '<thead><tr>';
+        html += '<th style="width:40%">Indicador</th>';
+        html += '<th style="width:30%;text-align:right">Atividade 1 - Comercio/Ind.</th>';
+        html += '<th style="width:30%;text-align:right">Atividade 2 - Servicos</th>';
+        html += '</tr></thead>';
+        html += '<tbody>';
+
+        // Dados por atividade
+        var at1 = res.atividades.length > 0 ? res.atividades[0] : null;
+        var at2 = res.atividades.length > 1 ? res.atividades[1] : null;
+
+        html += this.linhaTabela("Anexo", at1 ? at1.anexo : "-", at2 ? at2.anexo : "-");
+        html += this.linhaTabela("Receita mensal (R$)", at1 ? Simulador.Format.moeda(at1.receitaTotal) : "-", at2 ? Simulador.Format.moeda(at2.receitaTotal) : "-");
+        html += this.linhaTabela("Alquota NOMINAL da faixa", at1 ? Simulador.Format.percentual(at1.aliqNominal) : "-", at2 ? Simulador.Format.percentual(at2.aliqNominal) : "-");
+        html += this.linhaTabela("Parcela a deduzir (R$)", at1 ? Simulador.Format.moeda(at1.parcelaDeduzir) : "-", at2 ? Simulador.Format.moeda(at2.parcelaDeduzir) : "-");
+        html += this.linhaTabela("ALIQUOTA EFETIVA do Simples", at1 ? Simulador.Format.percentual(at1.aliqEfetiva) : "-", at2 ? Simulador.Format.percentual(at2.aliqEfetiva) : "-");
+        html += this.linhaTabela("% da aliq. destinado a PIS/COFINS (->CBS)", at1 ? Simulador.Format.percentual(at1.percPisCofins) : "-", at2 ? Simulador.Format.percentual(at2.percPisCofins) : "-");
+        html += this.linhaTabela("% da aliq. destinado a ICMS/ISS (->IBS)", at1 ? Simulador.Format.percentual(at1.percIcmsIss) : "-", at2 ? Simulador.Format.percentual(at2.percIcmsIss) : "-");
+
+        html += '<tr class="subtotal"><td colspan="3"></td></tr>';
+
+        html += this.linhaTabela("Receita sem concentracao (R$)", at1 ? Simulador.Format.moeda(at1.receitaSemConcentracao) : "-", at2 ? Simulador.Format.moeda(at2.receitaNormal) : "-");
+        html += this.linhaTabela("Receita com ICMS-ST (R$)", at1 ? Simulador.Format.moeda(at1.receitaST) : "-", at2 ? Simulador.Format.moeda(at2.receitaST) : "-");
+        html += this.linhaTabela("Receita monofasica (R$)", at1 ? Simulador.Format.moeda(at1.receitaMono) : "-", at2 ? Simulador.Format.moeda(at2.receitaMono) : "-");
+
+        html += '<tr class="subtotal"><td colspan="3"></td></tr>';
+
+        html += this.linhaTabela("Aliq. DAS s/ receita normal", at1 ? Simulador.Format.percentual(at1.aliqDasNormal) : "-", at2 ? Simulador.Format.percentual(at2.aliqDASNormalReduzida) : "-");
+        html += this.linhaTabela("Aliq. DAS s/ receita ST", at1 ? Simulador.Format.percentual(at1.aliqDasST) : "-", at2 ? Simulador.Format.percentual(at2.aliqDASSTReducida) : "-");
+        html += this.linhaTabela("Aliq. DAS s/ receita monofasica", at1 ? Simulador.Format.percentual(at1.aliqDasMono) : "-", at2 ? Simulador.Format.percentual(at2.aliqDASMonoReduzida) : "-");
+
+        html += '<tr class="subtotal"><td colspan="3"></td></tr>';
+
+        html += this.linhaTabelaDestaque("DAS MENSAL DA ATIVIDADE (R$)", at1 ? Simulador.Format.moeda(at1.dasTotal) : "-", at2 ? Simulador.Format.moeda(at2.dasReduzido) : "-");
+        html += this.linhaTabela("Credito de IBS/CBS transferivel (total, R$)", at1 ? Simulador.Format.moeda(at1.creditoTotal) : "-", at2 ? Simulador.Format.moeda(at2.debitoIBSCBS) : "-");
+        html += this.linhaTabela("Credito transferivel - so vendas B2B (R$)", at1 ? Simulador.Format.moeda(at1.creditoB2B) : "-", at2 ? Simulador.Format.moeda(at2.creditoB2B) : "-");
+        html += this.linhaTabela("Faixa da tabela aplicada", at1 ? at1.faixa : "-", at2 ? at2.faixa : "-");
+
+        html += '</tbody></table>';
+        html += '</div></div>';
+
+        // Totais
+        html += '<div class="card" style="background:linear-gradient(135deg,#0a0a23,#0d3b66);color:white;text-align:center">';
+        html += '<div class="grid-2">';
+        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">DAS TOTAL MENSAL (R$)</div><div style="font-size:1.6rem;font-weight:700;margin-top:4px">' + Simulador.Format.moeda(res.dasTotalMensal) + '</div></div>';
+        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">CREDITO IBS/CBS GERADO A CLIENTES B2B (R$/mes)</div><div style="font-size:1.6rem;font-weight:700;margin-top:4px">' + Simulador.Format.moeda(res.creditoTotalB2B) + '</div></div>';
+        html += '</div></div>';
 
         document.getElementById("cen1-content").innerHTML = html;
-        document.getElementById("cen1-das-total").textContent = Simulador.Format.moeda(res.dasTotalMensal);
-        document.getElementById("cen1-credito-b2b").textContent = Simulador.Format.moeda(res.creditoTotalB2B);
     },
 
     renderCenario2: function() {
         var res = this.cen2Resultado;
         var html = "";
 
-        for (var i = 0; i < res.atividades.length; i++) {
-            var at = res.atividades[i];
-            html += '<div class="card">';
-            html += '<div class="activity-header"><span class="activity-tag ' + (i === 0 ? 'ativ1' : 'ativ2') + '">' + at.nome + '</span></div>';
-            html += '<div class="grid-4">';
-            html += this.resultItem("Receita Mensal", Simulador.Format.moeda(at.receitaTotal));
-            html += this.resultItem("Alq. Efetiva Simples", Simulador.Format.percentual4(at.aliqEfetiva));
-            html += this.resultItem("cClassTrib", at.cClassTrib);
-            html += this.resultItem("% c/ reducao", Simulador.Format.percentual(at.pComReducao));
-            html += '</div>';
-            html += '<div class="divider"></div>';
-            html += '<div class="grid-4">';
-            html += this.resultItem("pRedIBS / pRedCBS", Simulador.Format.percentual(at.pRedIBS) + " / " + Simulador.Format.percentual(at.pRedCBS));
-            html += this.resultItem("Alq. IBS/CBS venda", Simulador.Format.percentual4(at.aliqVenda));
-            html += this.resultItem("DAS reduzido", Simulador.Format.moeda(at.dasReduzido));
-            html += this.resultItem("Debito IBS/CBS", Simulador.Format.moeda(at.debitoIBSCBS));
-            html += '</div>';
-            html += '<div class="grid-3">';
-            html += this.resultItem("Base por fora", Simulador.Format.moeda(at.basePorFora));
-            html += this.resultItem("Alq. DAS s/ normal", Simulador.Format.percentual4(at.aliqDASNormalReduzida));
-            html += this.resultItem("Alq. DAS s/ ST", Simulador.Format.percentual4(at.aliqDASSTReducida));
-            html += '</div>';
-            html += '</div>';
-        }
+        html += '<div class="alert alert-info">';
+        html += '<strong>Cenario 2 - Hibrido:</strong> DAS reduzido (sem parcela CBS/IBS) + debito IBS/CBS por fora com reducoes do cClassTrib';
+        html += ' + creditos sobre despesas detalhadas.';
+        html += '</div>';
+
+        // Tabela principal
+        html += '<div class="card">';
+        html += '<div class="card-title">Apuracao por Atividade - DAS Reduzido e Debito por Fora</div>';
+        html += '<div style="overflow-x:auto">';
+        html += '<table>';
+        html += '<thead><tr>';
+        html += '<th style="width:40%">Indicador</th>';
+        html += '<th style="width:30%;text-align:right">Atividade 1 - Comercio/Ind.</th>';
+        html += '<th style="width:30%;text-align:right">Atividade 2 - Servicos</th>';
+        html += '</tr></thead>';
+        html += '<tbody>';
+
+        var at1 = res.atividades.length > 0 ? res.atividades[0] : null;
+        var at2 = res.atividades.length > 1 ? res.atividades[1] : null;
+
+        html += this.linhaTabela("Receita mensal (R$)", at1 ? Simulador.Format.moeda(at1.receitaTotal) : "-", at2 ? Simulador.Format.moeda(at2.receitaTotal) : "-");
+        html += this.linhaTabela("Receita sem concentracao (R$)", at1 ? Simulador.Format.moeda(at1.receitaNormal) : "-", at2 ? Simulador.Format.moeda(at2.receitaNormal) : "-");
+        html += this.linhaTabela("Receita com ICMS-ST (R$)", at1 ? Simulador.Format.moeda(at1.receitaST) : "-", at2 ? Simulador.Format.moeda(at2.receitaST) : "-");
+        html += this.linhaTabela("Receita monofasica (R$)", at1 ? Simulador.Format.moeda(at1.receitaMono) : "-", at2 ? Simulador.Format.moeda(at2.receitaMono) : "-");
+        html += this.linhaTabela("Aliquota efetiva do Simples", at1 ? Simulador.Format.percentual(at1.aliqEfetiva) : "-", at2 ? Simulador.Format.percentual(at2.aliqEfetiva) : "-");
+        html += this.linhaTabela("% parcela -> CBS", at1 ? Simulador.Format.percentual(at1.percPisCofins) : "-", at2 ? Simulador.Format.percentual(at2.percPisCofins) : "-");
+        html += this.linhaTabela("% parcela -> IBS", at1 ? Simulador.Format.percentual(at1.percIcmsIss) : "-", at2 ? Simulador.Format.percentual(at2.percIcmsIss) : "-");
+
+        html += '<tr class="subtotal"><td colspan="3"></td></tr>';
+
+        html += this.linhaTabela("cClassTrib dos produtos com reducao", at1 ? at1.cClassTrib : "-", at2 ? at2.cClassTrib : "-");
+        html += this.linhaTabela("% de produtos COM reducao (calculado)", at1 ? Simulador.Format.percentual(at1.pComReducao) : "-", at2 ? Simulador.Format.percentual(at2.pComReducao) : "-");
+        html += this.linhaTabela("pRedIBS (reducao do IBS)", at1 ? Simulador.Format.percentual(at1.pRedIBS) : "-", at2 ? Simulador.Format.percentual(at2.pRedIBS) : "-");
+        html += this.linhaTabela("pRedCBS (reducao da CBS)", at1 ? Simulador.Format.percentual(at1.pRedCBS) : "-", at2 ? Simulador.Format.percentual(at2.pRedCBS) : "-");
+        html += this.linhaTabela("ALIQ. IBS/CBS DE VENDA (media c/ reducao)", at1 ? Simulador.Format.percentual(at1.aliqVenda) : "-", at2 ? Simulador.Format.percentual(at2.aliqVenda) : "-");
+
+        html += '<tr class="subtotal"><td colspan="3"></td></tr>';
+
+        html += this.linhaTabela("Aliq. DAS reduzida s/ receita normal", at1 ? Simulador.Format.percentual(at1.aliqDASNormalReduzida) : "-", at2 ? Simulador.Format.percentual(at2.aliqDASNormalReduzida) : "-");
+        html += this.linhaTabela("Aliq. DAS reduzida s/ receita ST", at1 ? Simulador.Format.percentual(at1.aliqDASSTReducida) : "-", at2 ? Simulador.Format.percentual(at2.aliqDASSTReducida) : "-");
+        html += this.linhaTabela("Aliq. DAS reduzida s/ receita monofasica", at1 ? Simulador.Format.percentual(at1.aliqDASMonoReduzida) : "-", at2 ? Simulador.Format.percentual(at2.aliqDASMonoReduzida) : "-");
+
+        html += '<tr class="subtotal"><td colspan="3"></td></tr>';
+
+        html += this.linhaTabelaDestaque("DAS MENSAL REDUZIDO (R$)", at1 ? Simulador.Format.moeda(at1.dasReduzido) : "-", at2 ? Simulador.Format.moeda(at2.dasReduzido) : "-");
+        html += this.linhaTabela("Base do IBS/CBS por fora (R$)", at1 ? Simulador.Format.moeda(at1.basePorFora) : "-", at2 ? Simulador.Format.moeda(at2.basePorFora) : "-");
+        html += this.linhaTabela("Debito de IBS/CBS por fora (R$)", at1 ? Simulador.Format.moeda(at1.debitoIBSCBS) : "-", at2 ? Simulador.Format.moeda(at2.debitoIBSCBS) : "-");
+
+        html += '</tbody></table>';
+        html += '</div></div>';
+
+        // Apuracao global
+        html += '<div class="card">';
+        html += '<div class="card-title">Apuracao Global do IBS/CBS por Fora e Carga Total</div>';
+        html += '<div style="overflow-x:auto">';
+        html += '<table>';
+        html += '<thead><tr>';
+        html += '<th style="width:60%">Indicador</th>';
+        html += '<th style="width:40%;text-align:right">Valor (R$)</th>';
+        html += '</tr></thead>';
+        html += '<tbody>';
+
+        html += this.linhaTabelaGlobal("Debito total de IBS/CBS (R$)", Simulador.Format.moeda(res.debitoTotalIBSCBS));
+        html += this.linhaTabelaGlobal("Credito s/ despesas detalhadas (R$)", Simulador.Format.moeda(res.creditoDespesas));
+        html += this.linhaTabelaGlobalDestaque("IBS/CBS a recolher (R$)", Simulador.Format.moeda(res.ibsCBSRecolher));
+        html += this.linhaTabelaGlobal("Saldo credor do periodo, se houver (R$)", Simulador.Format.moeda(res.saldoCredor));
+        html += this.linhaTabelaGlobal("DAS total reduzido (R$)", Simulador.Format.moeda(res.dasTotalReduzido));
+
+        html += '</tbody></table>';
+        html += '</div></div>';
+
+        // Totais
+        html += '<div class="card" style="background:linear-gradient(135deg,#0a0a23,#0d3b66);color:white;text-align:center">';
+        html += '<div class="grid-2">';
+        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">CARGA TOTAL MENSAL - HIBRIDO (R$)</div><div style="font-size:1.6rem;font-weight:700;margin-top:4px">' + Simulador.Format.moeda(res.cargaTotalMensal) + '</div></div>';
+        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">CREDITO IBS/CBS GERADO A CLIENTES B2B (R$/mes)</div><div style="font-size:1.6rem;font-weight:700;margin-top:4px">' + Simulador.Format.moeda(res.creditoTotalB2B) + '</div></div>';
+        html += '</div></div>';
 
         document.getElementById("cen2-content").innerHTML = html;
-        document.getElementById("cen2-das-total").textContent = Simulador.Format.moeda(res.dasTotalReduzido);
-        document.getElementById("cen2-debito").textContent = Simulador.Format.moeda(res.debitoTotalIBSCBS);
-        document.getElementById("cen2-credito-despesas").textContent = Simulador.Format.moeda(res.creditoDespesas);
-        document.getElementById("cen2-ibs-cbs-recolher").textContent = Simulador.Format.moeda(res.ibsCBSRecolher);
-        document.getElementById("cen2-saldo-credor").textContent = Simulador.Format.moeda(res.saldoCredor);
-        document.getElementById("cen2-carga-total").textContent = Simulador.Format.moeda(res.cargaTotalMensal);
-        document.getElementById("cen2-credito-b2b").textContent = Simulador.Format.moeda(res.creditoTotalB2B);
     },
 
     renderDespesas: function() {
@@ -632,9 +710,17 @@ Simulador.App = {
 
         for (var s = 0; s < info.subtotais.length; s++) {
             var st = info.subtotais[s];
+            html += '<div class="card">';
+            html += '<div class="card-title">' + st.nome + '</div>';
             html += '<table>';
-            html += '<thead><tr><th colspan="5" style="background:var(--primary);font-size:0.85rem">' + st.nome + '</th></tr>';
-            html += '<tr><th>Categoria</th><th>Valor Mensal</th><th>Credito?</th><th>% Forn. Reg. Reg.</th><th>Credito Estimado</th></tr></thead>';
+            html += '<thead><tr>';
+            html += '<th>Categoria de despesa</th>';
+            html += '<th style="text-align:right">Valor mensal (R$)</th>';
+            html += '<th style="text-align:center">Credito? (S/N)</th>';
+            html += '<th style="text-align:right">% fornecedor reg. regular</th>';
+            html += '<th style="text-align:right">% reducao cClassTrib fornecedor</th>';
+            html += '<th style="text-align:right">Credito estimado (R$)</th>';
+            html += '</tr></thead>';
             html += '<tbody>';
 
             for (var i = 0; i < st.itens.length; i++) {
@@ -642,25 +728,27 @@ Simulador.App = {
                 html += '<tr>';
                 html += '<td>' + it.nome + '</td>';
                 html += '<td class="num">' + Simulador.Format.moeda(it.valor) + '</td>';
-                html += '<td>' + it.temCredito + '</td>';
+                html += '<td style="text-align:center">' + it.temCredito + '</td>';
                 html += '<td class="num">' + (it.temCredito === "S" ? Simulador.Format.percentual(it.percFornRegRegular) : "-") + '</td>';
+                html += '<td class="num">' + (it.temCredito === "S" ? Simulador.Format.percentual(it.percRedFornecedor) : "-") + '</td>';
                 html += '<td class="num">' + Simulador.Format.moeda(it.creditoEstimado) + '</td>';
                 html += '</tr>';
             }
 
             html += '<tr class="subtotal">';
-            html += '<td>Subtotal</td>';
-            html += '<td class="num">' + Simulador.Format.moeda(st.subtotalValor) + '</td>';
-            html += '<td colspan="2"></td>';
-            html += '<td class="num">' + Simulador.Format.moeda(st.subtotalCredito) + '</td>';
+            html += '<td><strong>Subtotal</strong></td>';
+            html += '<td class="num"><strong>' + Simulador.Format.moeda(st.subtotalValor) + '</strong></td>';
+            html += '<td colspan="3"></td>';
+            html += '<td class="num"><strong>' + Simulador.Format.moeda(st.subtotalCredito) + '</strong></td>';
             html += '</tr>';
             html += '</tbody></table>';
+            html += '</div>';
         }
 
-        html += '<div class="card" style="background:var(--primary);color:white;text-align:center">';
+        html += '<div class="card" style="background:linear-gradient(135deg,#0a0a23,#0d3b66);color:white;text-align:center">';
         html += '<div class="grid-2">';
-        html += '<div><div class="rotulo" style="color:rgba(255,255,255,0.8)">TOTAL GERAL DESPESAS</div><div style="font-size:1.3rem;font-weight:700">' + Simulador.Format.moeda(info.totalGeral) + '</div></div>';
-        html += '<div><div class="rotulo" style="color:rgba(255,255,255,0.8)">TOTAL CREDITO ESTIMADO</div><div style="font-size:1.3rem;font-weight:700">' + Simulador.Format.moeda(info.totalCreditavel) + '</div></div>';
+        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">TOTAL GERAL DAS DESPESAS</div><div style="font-size:1.4rem;font-weight:700;margin-top:4px">' + Simulador.Format.moeda(info.totalGeral) + '</div></div>';
+        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">TOTAL DE DESPESAS COM DIREITO A CREDITO</div><div style="font-size:1.4rem;font-weight:700;margin-top:4px">' + Simulador.Format.moeda(info.totalCreditavel) + '</div></div>';
         html += '</div></div>';
 
         document.getElementById("despesas-content").innerHTML = html;
@@ -699,16 +787,39 @@ Simulador.App = {
         document.getElementById("comp-diff-liq").textContent = F.sinal(c.diffLiquida) + F.moedaNegativo(c.diffLiquida);
         document.getElementById("comp-diff-liq").className = F.corDiferenca(c.diffLiquida);
 
-        document.getElementById("comp-aliq-nf-c1").textContent = "por dentro";
-        document.getElementById("comp-aliq-nf-c2").textContent = F.percentual4(c.aliqVendaAtiv1);
+        document.getElementById("comp-aliq-nf-c2").textContent = F.percentual(c.aliqVendaAtiv1);
+        var elAliqNfC2b = document.getElementById("comp-aliq-nf-c2b");
+        if (elAliqNfC2b) elAliqNfC2b.textContent = F.percentual(c.aliqVendaAtiv2);
         document.getElementById("comp-saldo-credor").textContent = F.moeda(c.saldoCredor);
 
+        // Leitura dos resultados
+        var melhorEmpresa = c.cargaPropriaMensalC2 < c.cargaPropriaMensalC1 ? "HIBRIDO" : (c.cargaPropriaMensalC2 > c.cargaPropriaMensalC1 ? "PGDAS" : "EMPATE");
+        var melhorCadeia = c.cargaLiquidaC2 < c.cargaLiquidaC1 ? "HIBRIDO" : (c.cargaLiquidaC2 > c.cargaLiquidaC1 ? "PGDAS" : "EMPATE");
+
+        document.getElementById("comp-melhor-empresa").textContent = melhorEmpresa;
+        document.getElementById("comp-melhor-cadeia").textContent = melhorCadeia;
+
         document.getElementById("comp-recomendacao").textContent = c.recomendar;
-        document.getElementById("comp-melhor").textContent = c.nomeMelhor;
     },
 
     resultItem: function(label, valor, destaque) {
         return '<div class="result-item"><div style="font-size:0.72rem;color:var(--text-muted)">' + label + '</div><div style="font-size:0.9rem;font-weight:' + (destaque ? '700' : '500') + ';color:' + (destaque ? 'var(--primary-dark)' : 'var(--text)') + '">' + valor + '</div></div>';
+    },
+
+    linhaTabela: function(label, val1, val2) {
+        return '<tr><td>' + label + '</td><td class="num">' + val1 + '</td><td class="num">' + val2 + '</td></tr>';
+    },
+
+    linhaTabelaDestaque: function(label, val1, val2) {
+        return '<tr style="background:rgba(0,212,255,0.08);font-weight:700"><td><strong>' + label + '</strong></td><td class="num"><strong>' + val1 + '</strong></td><td class="num"><strong>' + val2 + '</strong></td></tr>';
+    },
+
+    linhaTabelaGlobal: function(label, val) {
+        return '<tr><td>' + label + '</td><td class="num">' + val + '</td></tr>';
+    },
+
+    linhaTabelaGlobalDestaque: function(label, val) {
+        return '<tr style="background:rgba(0,212,255,0.08);font-weight:700"><td><strong>' + label + '</strong></td><td class="num"><strong>' + val + '</strong></td></tr>';
     },
 
     exportar: function() {
