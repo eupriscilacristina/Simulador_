@@ -27,7 +27,8 @@
 
     <div class="container">
         <div class="tabs">
-            <button class="tab-btn active" data-tab="dados">Dados</button>
+            <button class="tab-btn active" data-tab="leia">Leia-me</button>
+            <button class="tab-btn" data-tab="dados">Dados</button>
             <button class="tab-btn" data-tab="despesas">Despesas</button>
             <button class="tab-btn" data-tab="cen1">Cenario 1 - PGDAS</button>
             <button class="tab-btn" data-tab="cen2">Cenario 2 - Hibrido</button>
@@ -36,8 +37,61 @@
             <button class="tab-btn" data-tab="confronto">Confronto Simples</button>
         </div>
 
+        <!-- ==================== TAB LEIA-ME ==================== -->
+        <div id="tab-leia" class="tab-content active">
+            <div class="card card-leia-me">
+                <div class="card-title">Leia-me <span class="badge" style="background:#f39c12;color:#333">Manual</span></div>
+                <div class="leia-me-content">
+                    <div class="leia-me-section">
+                        <h4>1. Objetivo</h4>
+                        <p>Comparar, para optantes do Simples Nacional, as duas estrategias do art. 41 da LC 214/2025:</p>
+                        <ul>
+                            <li><strong>CENARIO 1 - PGDAS:</strong> IBS/CBS recolhidos por dentro do PGDAS-D.</li>
+                            <li><strong>CENARIO 2 - HIBRIDO:</strong> Demais tributos no Simples + IBS/CBS apurados por fora (regime regular), com reducoes de alquota do cClassTrib nas vendas e creditos sobre as despesas detalhadas.</li>
+                        </ul>
+                    </div>
+                    <div class="leia-me-section">
+                        <h4>2. Como Usar</h4>
+                        <ul>
+                            <li>Preencha somente os campos em amarelo nas abas <strong>Dados</strong> e <strong>Despesas</strong>.</li>
+                            <li>Escolha o ano (2027 a 2033).</li>
+                            <li>As abas <strong>Cen1_PGDAS</strong> e <strong>Cen2_Hibrido</strong> calculam automaticamente.</li>
+                            <li>A aba <strong>Comparativo</strong> consolida e indica a estrategia.</li>
+                        </ul>
+                    </div>
+                    <div class="leia-me-section">
+                        <h4>3. Variaveis que Decidem o Jogo</h4>
+                        <ul>
+                            <li>% de vendas B2B para clientes do regime regular (no hibrido o cliente credita o IBS/CBS destacado).</li>
+                            <li>cClassTrib das vendas: reducoes so valem por fora.</li>
+                            <li>Volume e perfil das despesas com credito.</li>
+                            <li>Receitas segregadas (ST/monofasico) perdem o beneficio gradualmente no Cenario 1.</li>
+                            <li>Vendas B2C, margem alta e cClassTrib integral favorecem o PGDAS.</li>
+                        </ul>
+                    </div>
+                    <div class="leia-me-section">
+                        <h4>4. Premissas</h4>
+                        <ul>
+                            <li>Alicotas de referencia estimadas (serao fixadas por resolucao do Senado).</li>
+                            <li>Transicao do IBS: 2029=10%, 2030=20%, 2031=30%, 2032=40%, 2033=100%.</li>
+                            <li>CBS integral desde 2027.</li>
+                            <li>IBS-teste de 0,1% (2027/2028) desprezado.</li>
+                            <li>Codigos cClassTrib pre-carregados sao exemplos - confirme na tabela oficial.</li>
+                        </ul>
+                    </div>
+                    <div class="leia-me-section">
+                        <h4>5. Base Legal</h4>
+                        <p>EC 132/2023; LC 214/2025 (art. 41 - opcao irretratavel); IT/NT 2025.002; LC 123/2006 (Anexos I a V).</p>
+                    </div>
+                    <div class="leia-me-section leia-me-aviso">
+                        <p><strong>AVISO:</strong> Ferramenta de apoio a decisao com estimativas e premissas simplificadoras. Nao substitui a analise do caso concreto nem a legislacao vigente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- ==================== TAB DADOS ==================== -->
-        <div id="tab-dados" class="tab-content active">
+        <div id="tab-dados" class="tab-content">
             <div class="card">
                 <div class="card-title">Identificacao do Cliente</div>
                 <div class="grid-3">
@@ -224,56 +278,6 @@
                         <label>% das vendas B2B para clientes do regime regular</label>
                         <input type="text" id="percB2B" class="campo-amarelo calc-trigger num-input">
                         <div class="help-text">Variavel decisiva: no hibrido o cliente credita o IBS/CBS destacado na NF.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card card-leia-me">
-                <div class="card-title">Leia-me <span class="badge" style="background:#f39c12;color:#333">Manual</span></div>
-                <div class="leia-me-content">
-                    <div class="leia-me-section">
-                        <h4>1. Objetivo</h4>
-                        <p>Comparar, para optantes do Simples Nacional, as duas estrategias do art. 41 da LC 214/2025:</p>
-                        <ul>
-                            <li><strong>CENARIO 1 - PGDAS:</strong> IBS/CBS recolhidos por dentro do PGDAS-D.</li>
-                            <li><strong>CENARIO 2 - HIBRIDO:</strong> Demais tributos no Simples + IBS/CBS apurados por fora (regime regular), com reducoes de alquota do cClassTrib nas vendas e creditos sobre as despesas detalhadas.</li>
-                        </ul>
-                    </div>
-                    <div class="leia-me-section">
-                        <h4>2. Como Usar</h4>
-                        <ul>
-                            <li>Preencha somente os campos em amarelo nas abas <strong>Dados</strong> e <strong>Despesas</strong>.</li>
-                            <li>Escolha o ano (2027 a 2033).</li>
-                            <li>As abas <strong>Cen1_PGDAS</strong> e <strong>Cen2_Hibrido</strong> calculam automaticamente.</li>
-                            <li>A aba <strong>Comparativo</strong> consolida e indica a estrategia.</li>
-                        </ul>
-                    </div>
-                    <div class="leia-me-section">
-                        <h4>3. Variaveis que Decidem o Jogo</h4>
-                        <ul>
-                            <li>% de vendas B2B para clientes do regime regular (no hibrido o cliente credita o IBS/CBS destacado).</li>
-                            <li>cClassTrib das vendas: reducoes so valem por fora.</li>
-                            <li>Volume e perfil das despesas com credito.</li>
-                            <li>Receitas segregadas (ST/monofasico) perdem o beneficio gradualmente no Cenario 1.</li>
-                            <li>Vendas B2C, margem alta e cClassTrib integral favorecem o PGDAS.</li>
-                        </ul>
-                    </div>
-                    <div class="leia-me-section">
-                        <h4>4. Premissas</h4>
-                        <ul>
-                            <li>Alicotas de referencia estimadas (serao fixadas por resolucao do Senado).</li>
-                            <li>Transicao do IBS: 2029=10%, 2030=20%, 2031=30%, 2032=40%, 2033=100%.</li>
-                            <li>CBS integral desde 2027.</li>
-                            <li>IBS-teste de 0,1% (2027/2028) desprezado.</li>
-                            <li>Codigos cClassTrib pre-carregados sao exemplos - confirme na tabela oficial.</li>
-                        </ul>
-                    </div>
-                    <div class="leia-me-section">
-                        <h4>5. Base Legal</h4>
-                        <p>EC 132/2023; LC 214/2025 (art. 41 - opcao irretratavel); IT/NT 2025.002; LC 123/2006 (Anexos I a V).</p>
-                    </div>
-                    <div class="leia-me-section leia-me-aviso">
-                        <p><strong>AVISO:</strong> Ferramenta de apoio a decisao com estimativas e premissas simplificadoras. Nao substitui a analise do caso concreto nem a legislacao vigente.</p>
                     </div>
                 </div>
             </div>
