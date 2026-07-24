@@ -508,6 +508,48 @@ Simulador.App = {
             document.getElementById("calc-faixa2").textContent = "Faixa " + faixa2.faixa + " - Alq. Efetiva: " + Simulador.Format.percentual4(Simulador.SIMPLES_NACIONAL.calcAliqEfetiva(dados.rbt12, faixa2));
         }
 
+        // Atividade 1 - percentuais calculados
+        var rec1 = this.vn("receita1");
+        var recST1 = this.vn("receitaST1");
+        var recMono1 = this.vn("receitaMono1");
+        var recRed1 = this.vn("receitaRed1");
+
+        var percST1 = rec1 > 0 ? recST1 / rec1 : 0;
+        var percMono1 = rec1 > 0 ? recMono1 / rec1 : 0;
+        var percRed1 = rec1 > 0 ? recRed1 / rec1 : 0;
+        var percSemRed1 = 1 - percRed1;
+
+        var elPercST1 = document.getElementById("calc-percST1");
+        var elPercMono1 = document.getElementById("calc-percMono1");
+        var elPercRed1 = document.getElementById("calc-percRed1");
+        var elPercSemRed1 = document.getElementById("calc-percSemRed1");
+
+        if (elPercST1) elPercST1.textContent = Simulador.Format.percentual(percST1);
+        if (elPercMono1) elPercMono1.textContent = Simulador.Format.percentual(percMono1);
+        if (elPercRed1) elPercRed1.textContent = Simulador.Format.percentual(percRed1);
+        if (elPercSemRed1) elPercSemRed1.textContent = Simulador.Format.percentual(percSemRed1);
+
+        // Atividade 2 - percentuais calculados
+        var rec2 = this.vn("receita2");
+        var recST2 = this.vn("receitaST2");
+        var recMono2 = this.vn("receitaMono2");
+        var recRed2 = this.vn("receitaRed2");
+
+        var percST2 = rec2 > 0 ? recST2 / rec2 : 0;
+        var percMono2 = rec2 > 0 ? recMono2 / rec2 : 0;
+        var percRed2 = rec2 > 0 ? recRed2 / rec2 : 0;
+        var percSemRed2 = 1 - percRed2;
+
+        var elPercST2 = document.getElementById("calc-percST2");
+        var elPercMono2 = document.getElementById("calc-percMono2");
+        var elPercRed2 = document.getElementById("calc-percRed2");
+        var elPercSemRed2 = document.getElementById("calc-percSemRed2");
+
+        if (elPercST2) elPercST2.textContent = Simulador.Format.percentual(percST2);
+        if (elPercMono2) elPercMono2.textContent = Simulador.Format.percentual(percMono2);
+        if (elPercRed2) elPercRed2.textContent = Simulador.Format.percentual(percRed2);
+        if (elPercSemRed2) elPercSemRed2.textContent = Simulador.Format.percentual(percSemRed2);
+
         this.atualizarCClassTribDisplay();
     },
 

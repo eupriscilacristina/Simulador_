@@ -467,6 +467,11 @@ table .neu { color: var(--neutral); }
     font-style: italic;
 }
 
+.calc-display {
+    font-weight: 600;
+    color: var(--primary);
+}
+
 .divider {
     height: 1px;
     background: var(--border);
