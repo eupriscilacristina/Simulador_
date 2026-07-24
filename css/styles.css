@@ -45,6 +45,18 @@ body {
     z-index: 100;
 }
 
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-logo {
+    height: 48px;
+    width: auto;
+    border-radius: 6px;
+}
+
 .app-header h1 {
     font-size: 1.25rem;
     font-weight: 600;
