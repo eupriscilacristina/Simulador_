@@ -13,6 +13,7 @@ Simulador.App = {
         this.gerarFormDespesas();
         this.configurarDespesas();
         this.configurarAcoes();
+        this.configurarMascaraMoeda();
         this.preencherDefaults();
         this.calcular();
     },
@@ -171,10 +172,42 @@ Simulador.App = {
         }
     },
 
+    configurarMascaraMoeda: function() {
+        var self = this;
+        var el = document.getElementById("rbt12");
+        if (!el) return;
+
+        el.addEventListener("input", function(e) {
+            var cursor = el.selectionStart;
+            var antigo = el.value;
+            var lenAntigo = antigo.length;
+
+            var apenasDigitos = antigo.replace(/[^\d]/g, "");
+            if (!apenasDigitos) {
+                el.value = "";
+                return;
+            }
+
+            var num = parseInt(apenasDigitos, 10);
+            var formatado = num.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            el.value = "R$ " + formatado;
+
+            var diff = el.value.length - lenAntigo;
+            var novaPos = cursor + diff;
+            if (novaPos < 0) novaPos = 0;
+            if (novaPos > el.value.length) novaPos = el.value.length;
+            el.setSelectionRange(novaPos, novaPos);
+        });
+
+        el.addEventListener("blur", function() {
+            self.calcular();
+        });
+    },
+
     preencherDefaults: function() {
         this.setValueIfEmpty("cliente", "PLANT FLOR");
         this.setValueIfEmpty("ano", "2027");
-        this.setValueIfEmpty("rbt12", "822015.76");
+        this.setValueIfEmpty("rbt12", "R$ 822.015,76");
         this.setValueIfEmpty("anexo1", "I");
         this.setValueIfEmpty("receita1", "96127");
         this.setValueIfEmpty("receitaST1", "190358.24");
