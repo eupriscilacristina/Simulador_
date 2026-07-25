@@ -174,34 +174,36 @@ Simulador.App = {
 
     configurarMascaraMoeda: function() {
         var self = this;
-        var el = document.getElementById("rbt12");
-        if (!el) return;
+        var camposMoeda = ["rbt12", "receita1", "receitaST1", "receitaMono1", "receitaRed1", "exclusoes1",
+                           "receita2", "receitaST2", "receitaMono2", "receitaRed2", "exclusoes2"];
 
-        el.addEventListener("input", function(e) {
-            var cursor = el.selectionStart;
-            var antigo = el.value;
-            var lenAntigo = antigo.length;
+        for (var i = 0; i < camposMoeda.length; i++) {
+            var el = document.getElementById(camposMoeda[i]);
+            if (!el) continue;
 
-            var apenasDigitos = antigo.replace(/[^\d]/g, "");
-            if (!apenasDigitos) {
-                el.value = "";
-                return;
-            }
+            el.addEventListener("input", function(e) {
+                var campo = e.target;
+                var cursor = campo.selectionStart;
+                var antigo = campo.value;
+                var lenAntigo = antigo.length;
 
-            var num = parseInt(apenasDigitos, 10);
-            var formatado = num.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            el.value = "R$ " + formatado;
+                var apenasDigitos = antigo.replace(/[^\d]/g, "");
+                if (!apenasDigitos) {
+                    campo.value = "";
+                    return;
+                }
 
-            var diff = el.value.length - lenAntigo;
-            var novaPos = cursor + diff;
-            if (novaPos < 0) novaPos = 0;
-            if (novaPos > el.value.length) novaPos = el.value.length;
-            el.setSelectionRange(novaPos, novaPos);
-        });
+                var num = parseInt(apenasDigitos, 10);
+                var formatado = num.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                campo.value = "R$ " + formatado;
 
-        el.addEventListener("blur", function() {
-            self.calcular();
-        });
+                var diff = campo.value.length - lenAntigo;
+                var novaPos = cursor + diff;
+                if (novaPos < 0) novaPos = 0;
+                if (novaPos > campo.value.length) novaPos = campo.value.length;
+                campo.setSelectionRange(novaPos, novaPos);
+            });
+        }
     },
 
     preencherDefaults: function() {
@@ -209,23 +211,23 @@ Simulador.App = {
         this.setValueIfEmpty("ano", "2027");
         this.setValueIfEmpty("rbt12", "R$ 822.015,76");
         this.setValueIfEmpty("anexo1", "I");
-        this.setValueIfEmpty("receita1", "96127");
-        this.setValueIfEmpty("receitaST1", "190358.24");
-        this.setValueIfEmpty("receitaMono1", "0");
+        this.setValueIfEmpty("receita1", "R$ 96.127,00");
+        this.setValueIfEmpty("receitaST1", "R$ 190.358,24");
+        this.setValueIfEmpty("receitaMono1", "R$ 0,00");
         this.setValueIfEmpty("permConc1", "0");
         this.setValueIfEmpty("cClassTrib1", "RED-40-BAR-REST");
-        this.setValueIfEmpty("receitaRed1", "60000");
+        this.setValueIfEmpty("receitaRed1", "R$ 60.000,00");
         this.setValueIfEmpty("vendaCredito1", "S");
-        this.setValueIfEmpty("exclusoes1", "0");
+        this.setValueIfEmpty("exclusoes1", "R$ 0,00");
         this.setValueIfEmpty("anexo2", "III");
-        this.setValueIfEmpty("receita2", "50000");
-        this.setValueIfEmpty("receitaST2", "0");
-        this.setValueIfEmpty("receitaMono2", "0");
+        this.setValueIfEmpty("receita2", "R$ 50.000,00");
+        this.setValueIfEmpty("receitaST2", "R$ 0,00");
+        this.setValueIfEmpty("receitaMono2", "R$ 0,00");
         this.setValueIfEmpty("permConc2", "0");
         this.setValueIfEmpty("cClassTrib2", "000001");
-        this.setValueIfEmpty("receitaRed2", "0");
+        this.setValueIfEmpty("receitaRed2", "R$ 0,00");
         this.setValueIfEmpty("vendaCredito2", "S");
-        this.setValueIfEmpty("exclusoes2", "0");
+        this.setValueIfEmpty("exclusoes2", "R$ 0,00");
         this.setValueIfEmpty("percB2B", "0.6");
 
         this.setValueIfEmpty("despesa_1_1", "60000");
