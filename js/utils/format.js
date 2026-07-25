@@ -43,7 +43,7 @@ Simulador.Format = {
     parseNumero: function(str) {
         if (typeof str === "number") return str;
         if (!str) return 0;
-        return parseFloat(str.replace(/[R$\s]/g, "").replace(/\./g, "").replace(",", ".")) || 0;
+        return parseFloat(str.replace(/[R$\s%]/g, "").replace(/\./g, "").replace(",", ".")) || 0;
     },
 
     corDiferenca: function(valor) {

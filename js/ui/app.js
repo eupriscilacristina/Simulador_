@@ -132,8 +132,8 @@ Simulador.App = {
                 html += '<td>' + item.nome + '</td>';
                 html += '<td><input type="text" id="despesa_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right"></td>';
                 html += '<td style="text-align:center"><select id="despesa_cred_' + item.id + '" class="campo-amarelo calc-trigger"><option value="S">Sim</option><option value="N">Não</option></select></td>';
-                html += '<td><div style="position:relative"><input type="text" id="despesa_forn_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right;padding-right:18px"><span style="position:absolute;right:6px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.5);pointer-events:none">%</span></div></td>';
-                html += '<td><input type="text" id="despesa_red_forn_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right"></td>';
+                html += '<td><div style="position:relative"><input type="text" id="despesa_forn_' + item.id + '" class="campo-amarelo calc-trigger num-input pct-input" style="width:100%;box-sizing:border-box;text-align:right;padding-right:18px"><span style="position:absolute;right:6px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.5);pointer-events:none">%</span></div></td>';
+                html += '<td><div style="position:relative"><input type="text" id="despesa_red_forn_' + item.id + '" class="campo-amarelo calc-trigger num-input pct-input" style="width:100%;box-sizing:border-box;text-align:right;padding-right:18px"><span style="position:absolute;right:6px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.5);pointer-events:none">%</span></div></td>';
                 html += '<td class="num" id="despesa_result_' + item.id + '">R$ 0,00</td>';
                 html += '</tr>';
             }
@@ -173,37 +173,62 @@ Simulador.App = {
     },
 
     configurarMascaraMoeda: function() {
-        var self = this;
         var camposMoeda = ["rbt12", "receita1", "receitaST1", "receitaMono1", "receitaRed1", "exclusoes1",
                            "receita2", "receitaST2", "receitaMono2", "receitaRed2", "exclusoes2"];
+        var camposPct = document.querySelectorAll(".pct-input");
 
         for (var i = 0; i < camposMoeda.length; i++) {
             var el = document.getElementById(camposMoeda[i]);
             if (!el) continue;
-
-            el.addEventListener("input", function(e) {
-                var campo = e.target;
-                var cursor = campo.selectionStart;
-                var antigo = campo.value;
-                var lenAntigo = antigo.length;
-
-                var apenasDigitos = antigo.replace(/[^\d]/g, "");
-                if (!apenasDigitos) {
-                    campo.value = "";
-                    return;
-                }
-
-                var num = parseInt(apenasDigitos, 10);
-                var formatado = num.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                campo.value = "R$ " + formatado;
-
-                var diff = campo.value.length - lenAntigo;
-                var novaPos = cursor + diff;
-                if (novaPos < 0) novaPos = 0;
-                if (novaPos > campo.value.length) novaPos = campo.value.length;
-                campo.setSelectionRange(novaPos, novaPos);
-            });
+            el.addEventListener("input", function(e) { Simulador.App.mascaraMoeda(e.target); });
         }
+
+        for (var j = 0; j < camposPct.length; j++) {
+            camposPct[j].addEventListener("input", function(e) { Simulador.App.mascaraPct(e.target); });
+        }
+    },
+
+    mascaraMoeda: function(campo) {
+        var cursor = campo.selectionStart;
+        var antigo = campo.value;
+        var lenAntigo = antigo.length;
+
+        var apenasDigitos = antigo.replace(/[^\d]/g, "");
+        if (!apenasDigitos) {
+            campo.value = "";
+            return;
+        }
+
+        var num = parseInt(apenasDigitos, 10);
+        var formatado = num.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        campo.value = "R$ " + formatado;
+
+        var diff = campo.value.length - lenAntigo;
+        var novaPos = cursor + diff;
+        if (novaPos < 0) novaPos = 0;
+        if (novaPos > campo.value.length) novaPos = campo.value.length;
+        campo.setSelectionRange(novaPos, novaPos);
+    },
+
+    mascaraPct: function(campo) {
+        var cursor = campo.selectionStart;
+        var antigo = campo.value;
+        var lenAntigo = antigo.length;
+
+        var apenasDigitos = antigo.replace(/[^\d]/g, "");
+        if (!apenasDigitos) {
+            campo.value = "";
+            return;
+        }
+
+        var num = parseInt(apenasDigitos, 10);
+        campo.value = num + "%";
+
+        var diff = campo.value.length - lenAntigo;
+        var novaPos = cursor + diff;
+        if (novaPos < 0) novaPos = 0;
+        if (novaPos > campo.value.length) novaPos = campo.value.length;
+        campo.setSelectionRange(novaPos, novaPos);
     },
 
     preencherDefaults: function() {
@@ -214,7 +239,7 @@ Simulador.App = {
         this.setValueIfEmpty("receita1", "R$ 96.127,00");
         this.setValueIfEmpty("receitaST1", "R$ 190.358,24");
         this.setValueIfEmpty("receitaMono1", "R$ 0,00");
-        this.setValueIfEmpty("permConc1", "0");
+        this.setValueIfEmpty("permConc1", "0%");
         this.setValueIfEmpty("cClassTrib1", "RED-40-BAR-REST");
         this.setValueIfEmpty("receitaRed1", "R$ 60.000,00");
         this.setValueIfEmpty("vendaCredito1", "S");
@@ -223,80 +248,80 @@ Simulador.App = {
         this.setValueIfEmpty("receita2", "R$ 50.000,00");
         this.setValueIfEmpty("receitaST2", "R$ 0,00");
         this.setValueIfEmpty("receitaMono2", "R$ 0,00");
-        this.setValueIfEmpty("permConc2", "0");
+        this.setValueIfEmpty("permConc2", "0%");
         this.setValueIfEmpty("cClassTrib2", "000001");
         this.setValueIfEmpty("receitaRed2", "R$ 0,00");
         this.setValueIfEmpty("vendaCredito2", "S");
         this.setValueIfEmpty("exclusoes2", "R$ 0,00");
-        this.setValueIfEmpty("percB2B", "60");
+        this.setValueIfEmpty("percB2B", "60%");
 
-        this.setValueIfEmpty("despesa_1_1", "60000");
+        this.setValueIfEmpty("despesa_1_1", "R$ 60.000,00");
         this.setValueIfEmpty("despesa_cred_1_1", "S");
-        this.setValueIfEmpty("despesa_forn_1_1", "85");
-        this.setValueIfEmpty("despesa_red_forn_1_1", "0");
-        this.setValueIfEmpty("despesa_1_2", "20000");
+        this.setValueIfEmpty("despesa_forn_1_1", "85%");
+        this.setValueIfEmpty("despesa_red_forn_1_1", "0%");
+        this.setValueIfEmpty("despesa_1_2", "R$ 20.000,00");
         this.setValueIfEmpty("despesa_cred_1_2", "S");
-        this.setValueIfEmpty("despesa_forn_1_2", "80");
-        this.setValueIfEmpty("despesa_red_forn_1_2", "0");
-        this.setValueIfEmpty("despesa_1_3", "5000");
+        this.setValueIfEmpty("despesa_forn_1_2", "80%");
+        this.setValueIfEmpty("despesa_red_forn_1_2", "0%");
+        this.setValueIfEmpty("despesa_1_3", "R$ 5.000,00");
         this.setValueIfEmpty("despesa_cred_1_3", "S");
-        this.setValueIfEmpty("despesa_forn_1_3", "80");
-        this.setValueIfEmpty("despesa_red_forn_1_3", "0");
-        this.setValueIfEmpty("despesa_1_4", "8000");
+        this.setValueIfEmpty("despesa_forn_1_3", "80%");
+        this.setValueIfEmpty("despesa_red_forn_1_3", "0%");
+        this.setValueIfEmpty("despesa_1_4", "R$ 8.000,00");
         this.setValueIfEmpty("despesa_cred_1_4", "S");
-        this.setValueIfEmpty("despesa_forn_1_4", "70");
-        this.setValueIfEmpty("despesa_red_forn_1_4", "0");
+        this.setValueIfEmpty("despesa_forn_1_4", "70%");
+        this.setValueIfEmpty("despesa_red_forn_1_4", "0%");
 
-        this.setValueIfEmpty("despesa_2_1", "3000");
+        this.setValueIfEmpty("despesa_2_1", "R$ 3.000,00");
         this.setValueIfEmpty("despesa_cred_2_1", "S");
-        this.setValueIfEmpty("despesa_forn_2_1", "80");
-        this.setValueIfEmpty("despesa_red_forn_2_1", "0");
-        this.setValueIfEmpty("despesa_2_2", "2000");
+        this.setValueIfEmpty("despesa_forn_2_1", "80%");
+        this.setValueIfEmpty("despesa_red_forn_2_1", "0%");
+        this.setValueIfEmpty("despesa_2_2", "R$ 2.000,00");
         this.setValueIfEmpty("despesa_cred_2_2", "S");
-        this.setValueIfEmpty("despesa_forn_2_2", "70");
-        this.setValueIfEmpty("despesa_red_forn_2_2", "0");
+        this.setValueIfEmpty("despesa_forn_2_2", "70%");
+        this.setValueIfEmpty("despesa_red_forn_2_2", "0%");
 
-        this.setValueIfEmpty("despesa_3_1", "6000");
+        this.setValueIfEmpty("despesa_3_1", "R$ 6.000,00");
         this.setValueIfEmpty("despesa_cred_3_1", "S");
-        this.setValueIfEmpty("despesa_forn_3_1", "1");
-        this.setValueIfEmpty("despesa_red_forn_3_1", "0");
-        this.setValueIfEmpty("despesa_3_2", "8000");
+        this.setValueIfEmpty("despesa_forn_3_1", "100%");
+        this.setValueIfEmpty("despesa_red_forn_3_1", "0%");
+        this.setValueIfEmpty("despesa_3_2", "R$ 8.000,00");
         this.setValueIfEmpty("despesa_cred_3_2", "S");
-        this.setValueIfEmpty("despesa_forn_3_2", "1");
-        this.setValueIfEmpty("despesa_red_forn_3_2", "0");
-        this.setValueIfEmpty("despesa_3_3", "6000");
+        this.setValueIfEmpty("despesa_forn_3_2", "100%");
+        this.setValueIfEmpty("despesa_red_forn_3_2", "0%");
+        this.setValueIfEmpty("despesa_3_3", "R$ 6.000,00");
         this.setValueIfEmpty("despesa_cred_3_3", "S");
-        this.setValueIfEmpty("despesa_forn_3_3", "70");
-        this.setValueIfEmpty("despesa_red_forn_3_3", "0");
-        this.setValueIfEmpty("despesa_3_4", "2000");
+        this.setValueIfEmpty("despesa_forn_3_3", "70%");
+        this.setValueIfEmpty("despesa_red_forn_3_3", "0%");
+        this.setValueIfEmpty("despesa_3_4", "R$ 2.000,00");
         this.setValueIfEmpty("despesa_cred_3_4", "S");
-        this.setValueIfEmpty("despesa_forn_3_4", "1");
-        this.setValueIfEmpty("despesa_red_forn_3_4", "0");
-        this.setValueIfEmpty("despesa_3_5", "3000");
+        this.setValueIfEmpty("despesa_forn_3_4", "100%");
+        this.setValueIfEmpty("despesa_red_forn_3_4", "0%");
+        this.setValueIfEmpty("despesa_3_5", "R$ 3.000,00");
         this.setValueIfEmpty("despesa_cred_3_5", "S");
-        this.setValueIfEmpty("despesa_forn_3_5", "1");
-        this.setValueIfEmpty("despesa_red_forn_3_5", "0");
-        this.setValueIfEmpty("despesa_3_6", "2000");
+        this.setValueIfEmpty("despesa_forn_3_5", "100%");
+        this.setValueIfEmpty("despesa_red_forn_3_5", "0%");
+        this.setValueIfEmpty("despesa_3_6", "R$ 2.000,00");
         this.setValueIfEmpty("despesa_cred_3_6", "S");
-        this.setValueIfEmpty("despesa_forn_3_6", "1");
-        this.setValueIfEmpty("despesa_red_forn_3_6", "0");
-        this.setValueIfEmpty("despesa_3_7", "0");
+        this.setValueIfEmpty("despesa_forn_3_6", "100%");
+        this.setValueIfEmpty("despesa_red_forn_3_6", "0%");
+        this.setValueIfEmpty("despesa_3_7", "R$ 0,00");
         this.setValueIfEmpty("despesa_cred_3_7", "S");
-        this.setValueIfEmpty("despesa_forn_3_7", "1");
-        this.setValueIfEmpty("despesa_red_forn_3_7", "0");
+        this.setValueIfEmpty("despesa_forn_3_7", "100%");
+        this.setValueIfEmpty("despesa_red_forn_3_7", "0%");
 
-        this.setValueIfEmpty("despesa_4_1", "3000");
+        this.setValueIfEmpty("despesa_4_1", "R$ 3.000,00");
         this.setValueIfEmpty("despesa_cred_4_1", "N");
-        this.setValueIfEmpty("despesa_forn_4_1", "0");
-        this.setValueIfEmpty("despesa_red_forn_4_1", "0");
-        this.setValueIfEmpty("despesa_4_2", "25000");
+        this.setValueIfEmpty("despesa_forn_4_1", "0%");
+        this.setValueIfEmpty("despesa_red_forn_4_1", "0%");
+        this.setValueIfEmpty("despesa_4_2", "R$ 25.000,00");
         this.setValueIfEmpty("despesa_cred_4_2", "N");
-        this.setValueIfEmpty("despesa_forn_4_2", "0");
-        this.setValueIfEmpty("despesa_red_forn_4_2", "0");
-        this.setValueIfEmpty("despesa_4_3", "0");
+        this.setValueIfEmpty("despesa_forn_4_2", "0%");
+        this.setValueIfEmpty("despesa_red_forn_4_2", "0%");
+        this.setValueIfEmpty("despesa_4_3", "R$ 0,00");
         this.setValueIfEmpty("despesa_cred_4_3", "N");
-        this.setValueIfEmpty("despesa_forn_4_3", "0");
-        this.setValueIfEmpty("despesa_red_forn_4_3", "0");
+        this.setValueIfEmpty("despesa_forn_4_3", "0%");
+        this.setValueIfEmpty("despesa_red_forn_4_3", "0%");
     },
 
     setValueIfEmpty: function(id, val) {
