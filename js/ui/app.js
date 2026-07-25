@@ -131,8 +131,8 @@ Simulador.App = {
                 html += '<tr>';
                 html += '<td>' + item.nome + '</td>';
                 html += '<td><input type="text" id="despesa_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right"></td>';
-                html += '<td style="text-align:center"><select id="despesa_cred_' + item.id + '" class="campo-amarelo calc-trigger"><option value="S">S</option><option value="N">N</option></select></td>';
-                html += '<td><input type="text" id="despesa_forn_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right"></td>';
+                html += '<td style="text-align:center"><select id="despesa_cred_' + item.id + '" class="campo-amarelo calc-trigger"><option value="S">Sim</option><option value="N">Não</option></select></td>';
+                html += '<td><div style="position:relative"><input type="text" id="despesa_forn_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right;padding-right:18px"><span style="position:absolute;right:6px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.5);pointer-events:none">%</span></div></td>';
                 html += '<td><input type="text" id="despesa_red_forn_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right"></td>';
                 html += '<td class="num" id="despesa_result_' + item.id + '">R$ 0,00</td>';
                 html += '</tr>';
@@ -232,28 +232,28 @@ Simulador.App = {
 
         this.setValueIfEmpty("despesa_1_1", "60000");
         this.setValueIfEmpty("despesa_cred_1_1", "S");
-        this.setValueIfEmpty("despesa_forn_1_1", "0.85");
+        this.setValueIfEmpty("despesa_forn_1_1", "85");
         this.setValueIfEmpty("despesa_red_forn_1_1", "0");
         this.setValueIfEmpty("despesa_1_2", "20000");
         this.setValueIfEmpty("despesa_cred_1_2", "S");
-        this.setValueIfEmpty("despesa_forn_1_2", "0.8");
+        this.setValueIfEmpty("despesa_forn_1_2", "80");
         this.setValueIfEmpty("despesa_red_forn_1_2", "0");
         this.setValueIfEmpty("despesa_1_3", "5000");
         this.setValueIfEmpty("despesa_cred_1_3", "S");
-        this.setValueIfEmpty("despesa_forn_1_3", "0.8");
+        this.setValueIfEmpty("despesa_forn_1_3", "80");
         this.setValueIfEmpty("despesa_red_forn_1_3", "0");
         this.setValueIfEmpty("despesa_1_4", "8000");
         this.setValueIfEmpty("despesa_cred_1_4", "S");
-        this.setValueIfEmpty("despesa_forn_1_4", "0.7");
+        this.setValueIfEmpty("despesa_forn_1_4", "70");
         this.setValueIfEmpty("despesa_red_forn_1_4", "0");
 
         this.setValueIfEmpty("despesa_2_1", "3000");
         this.setValueIfEmpty("despesa_cred_2_1", "S");
-        this.setValueIfEmpty("despesa_forn_2_1", "0.8");
+        this.setValueIfEmpty("despesa_forn_2_1", "80");
         this.setValueIfEmpty("despesa_red_forn_2_1", "0");
         this.setValueIfEmpty("despesa_2_2", "2000");
         this.setValueIfEmpty("despesa_cred_2_2", "S");
-        this.setValueIfEmpty("despesa_forn_2_2", "0.7");
+        this.setValueIfEmpty("despesa_forn_2_2", "70");
         this.setValueIfEmpty("despesa_red_forn_2_2", "0");
 
         this.setValueIfEmpty("despesa_3_1", "6000");
@@ -266,7 +266,7 @@ Simulador.App = {
         this.setValueIfEmpty("despesa_red_forn_3_2", "0");
         this.setValueIfEmpty("despesa_3_3", "6000");
         this.setValueIfEmpty("despesa_cred_3_3", "S");
-        this.setValueIfEmpty("despesa_forn_3_3", "0.7");
+        this.setValueIfEmpty("despesa_forn_3_3", "70");
         this.setValueIfEmpty("despesa_red_forn_3_3", "0");
         this.setValueIfEmpty("despesa_3_4", "2000");
         this.setValueIfEmpty("despesa_cred_3_4", "S");
