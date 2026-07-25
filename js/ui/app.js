@@ -570,7 +570,7 @@ Simulador.App = {
             receitaTotalMensal += dados.atividades[i].receitaTotal;
         }
 
-        var sublimiteMsg = dados.rbt12 > 3600000 ? "ATENCAO: acima do sublimite -- ICMS/ISS ja fora do DAS" : "OK";
+        var sublimiteMsg = dados.rbt12 > 3600000 ? "Verificação do sublimite estadual" : "OK";
         var elSublimite = document.getElementById("calc-sublimite");
         if (elSublimite) elSublimite.textContent = sublimiteMsg;
 
@@ -578,12 +578,12 @@ Simulador.App = {
         if (dados.rbt12 === 0 || receitaTotalMensal === 0) {
             coerencia = "-";
         } else if (Math.abs(dados.rbt12 - 12 * receitaTotalMensal) / dados.rbt12 > 0.2) {
-            coerencia = "ATENCAO: RBT12 difere de 12x a receita mensal -- a faixa/aliquota pode nao refletir o cliente";
+            coerencia = "Coerência RBT12 × receita mensal informada";
         } else {
             coerencia = "OK";
         }
 
-        document.getElementById("calc-rbt12").textContent = Simulador.Format.moeda(dados.rbt12);
+
         document.getElementById("calc-coerencia").textContent = coerencia;
 
         if (faixa1) {
