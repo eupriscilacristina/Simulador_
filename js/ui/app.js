@@ -228,7 +228,7 @@ Simulador.App = {
         this.setValueIfEmpty("receitaRed2", "R$ 0,00");
         this.setValueIfEmpty("vendaCredito2", "S");
         this.setValueIfEmpty("exclusoes2", "R$ 0,00");
-        this.setValueIfEmpty("percB2B", "0.6");
+        this.setValueIfEmpty("percB2B", "60");
 
         this.setValueIfEmpty("despesa_1_1", "60000");
         this.setValueIfEmpty("despesa_cred_1_1", "S");
