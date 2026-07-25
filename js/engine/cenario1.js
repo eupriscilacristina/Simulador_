@@ -35,17 +35,18 @@ Simulador.Cenario1 = {
         var receitaNormal = ativ.receitaTotal - ativ.receitaST - ativ.receitaMono;
 
         var aliqNormal = aliqEf;
-        var aliqST = aliqEf * (1 - percIcms);
-        var aliqMono = aliqEf;
+        var aliqST = aliqEf * (1 - percIcms * ((1 - fase.faseIBS) + fase.faseIBS * ativ.percPermanece));
+        var aliqMono = aliqEf * (1 - percPis * fase.faseCBS * ativ.percPermanece);
 
         var dasNormal = receitaNormal * aliqNormal;
         var dasST = ativ.receitaST * aliqST;
         var dasMono = ativ.receitaMono * aliqMono;
         var dasTotal = dasNormal + dasST + dasMono;
 
-        var creditoCBS = aliqEf * percPis * fase.faseCBS * ativ.receitaTotal;
-        var creditoIBS = aliqEf * percIcms * fase.faseIBS * receitaNormal;
-        var creditoTotal = creditoCBS + creditoIBS;
+        var cbsNormal = aliqEf * (receitaNormal * (percPis * fase.faseCBS + percIcms * fase.faseIBS));
+        var cbsST = aliqEf * (ativ.receitaST * (percPis * fase.faseCBS + percIcms * fase.faseIBS * (1 - ativ.percPermanece)));
+        var cbsMono = aliqEf * (ativ.receitaMono * (percPis * fase.faseCBS * (1 - ativ.percPermanece) + percIcms * fase.faseIBS));
+        var creditoTotal = cbsNormal + cbsST + cbsMono;
         var creditoB2B = creditoTotal * percB2B;
 
         return {

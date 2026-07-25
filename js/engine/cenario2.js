@@ -64,7 +64,7 @@ Simulador.Cenario2 = {
         if (fase.faseIBS >= 1) {
             aliqDASST = aliqDASNormal;
         } else {
-            aliqDASST = aliqEf * (1 - percPis * fase.faseCBS - percIcms * (1 - fase.faseIBS));
+            aliqDASST = aliqEf * (1 - percPis * fase.faseCBS - percIcms * ((1 - fase.faseIBS) + fase.faseIBS * ativ.percPermanece));
         }
 
         var aliqDASMono = aliqEf * (1 - percPis * fase.faseCBS - percIcms * fase.faseIBS);
@@ -96,8 +96,7 @@ Simulador.Cenario2 = {
             aliqVenda = aliqSemReducao * pSemReducao + aliqComReducao * pComReducao;
         }
 
-        var basePorFora = Math.max(0, ativ.receitaTotal);
-        basePorFora = basePorFora - ativ.exclusoesBase;
+        var basePorFora = Math.max(0, ativ.receitaTotal - (ativ.receitaST + ativ.receitaMono) * ativ.percPermanece - ativ.exclusoesBase);
         basePorFora = Math.max(0, basePorFora);
 
         var debitoIBSCBS = basePorFora * aliqVenda;

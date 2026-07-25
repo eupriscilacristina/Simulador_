@@ -122,7 +122,8 @@
                         <input type="text" id="rbt12" class="campo-amarelo calc-trigger num-input">
                     </div>
                 </div>
-                <div class="grid-2" style="margin-top:8px">
+                <div class="grid-3" style="margin-top:8px">
+                    <div class="alert alert-info" id="calc-sublimite">-</div>
                     <div class="alert alert-info" id="calc-coerencia">-</div>
                     <div class="alert alert-success" id="calc-rbt12-display">RBT12: <strong id="calc-rbt12">-</strong></div>
                 </div>
@@ -167,16 +168,6 @@
                         <div class="help-text">Regra geral: 0%. Use >0% p/ combustiveis e regimes especificos.</div>
                     </div>
                     <div class="form-group">
-                        <label>Vendas geram credito ao adquirente? (S/N)</label>
-                        <select id="vendaCredito1" class="campo-amarelo calc-trigger">
-                            <option value="S">Sim</option>
-                            <option value="N">Nao</option>
-                        </select>
-                        <div class="help-text">Marque 'N' p/ bares e restaurantes - art. 276 da LC 214/2025 veda o credito ao adquirente.</div>
-                    </div>
-                </div>
-                <div class="grid-2">
-                    <div class="form-group">
                         <label>cClassTrib dos produtos COM reducao de IBS/CBS</label>
                         <select id="cClassTrib1" class="campo-amarelo calc-trigger">
                             <option value="000001">000001 - Tributacao integral</option>
@@ -191,10 +182,20 @@
                         </select>
                         <div class="help-text">pRedIBS: <strong id="cClassTrib1_pRedIBS">-</strong> | pRedCBS: <strong id="cClassTrib1_pRedCBS">-</strong></div>
                     </div>
+                </div>
+                <div class="grid-2">
                     <div class="form-group">
                         <label>Receita mensal de produtos COM reducao de IBS/CBS (R$)</label>
                         <input type="text" id="receitaRed1" class="campo-amarelo calc-trigger num-input">
                         <div class="help-text">- % de produtos COM reducao: <span id="calc-percRed1" class="calc-display">-</span> | % SEM reducao: <span id="calc-percSemRed1" class="calc-display">-</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Vendas geram credito ao adquirente? (S/N)</label>
+                        <select id="vendaCredito1" class="campo-amarelo calc-trigger">
+                            <option value="S">Sim</option>
+                            <option value="N">Nao</option>
+                        </select>
+                        <div class="help-text">Marque 'N' p/ bares e restaurantes - art. 276 da LC 214/2025 veda o credito ao adquirente.</div>
                     </div>
                 </div>
                 <div class="grid-1">
@@ -246,16 +247,6 @@
                         <div class="help-text">Regra geral: 0%. Use >0% p/ combustiveis e regimes especificos.</div>
                     </div>
                     <div class="form-group">
-                        <label>Vendas geram credito ao adquirente? (S/N)</label>
-                        <select id="vendaCredito2" class="campo-amarelo calc-trigger">
-                            <option value="S">Sim</option>
-                            <option value="N">Nao</option>
-                        </select>
-                        <div class="help-text">Marque 'N' p/ bares e restaurantes - art. 276 da LC 214/2025 veda o credito ao adquirente.</div>
-                    </div>
-                </div>
-                <div class="grid-2">
-                    <div class="form-group">
                         <label>cClassTrib dos produtos COM reducao de IBS/CBS</label>
                         <select id="cClassTrib2" class="campo-amarelo calc-trigger">
                             <option value="000001" selected>000001 - Tributacao integral</option>
@@ -270,10 +261,20 @@
                         </select>
                         <div class="help-text">pRedIBS: <strong id="cClassTrib2_pRedIBS">-</strong> | pRedCBS: <strong id="cClassTrib2_pRedCBS">-</strong></div>
                     </div>
+                </div>
+                <div class="grid-2">
                     <div class="form-group">
                         <label>Receita mensal de produtos COM reducao de IBS/CBS (R$)</label>
                         <input type="text" id="receitaRed2" class="campo-amarelo calc-trigger num-input">
                         <div class="help-text">- % de produtos COM reducao: <span id="calc-percRed2" class="calc-display">-</span> | % SEM reducao: <span id="calc-percSemRed2" class="calc-display">-</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Vendas geram credito ao adquirente? (S/N)</label>
+                        <select id="vendaCredito2" class="campo-amarelo calc-trigger">
+                            <option value="S">Sim</option>
+                            <option value="N">Nao</option>
+                        </select>
+                        <div class="help-text">Marque 'N' p/ bares e restaurantes - art. 276 da LC 214/2025 veda o credito ao adquirente.</div>
                     </div>
                 </div>
                 <div class="grid-1">

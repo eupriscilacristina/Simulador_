@@ -10,6 +10,7 @@ Simulador.App = {
     init: function() {
         this.configurarTabs();
         this.configurarFormularios();
+        this.gerarFormDespesas();
         this.configurarDespesas();
         this.configurarAcoes();
         this.preencherDefaults();
@@ -79,6 +80,80 @@ Simulador.App = {
                 Simulador.App.calcular();
             });
         }
+    },
+
+    gerarFormDespesas: function() {
+        var grupos = [
+            { nome: "1. DESPESAS VINCULADAS A ATIVIDADE 1 - COMERCIO/INDUSTRIA", itens: [
+                { id: "1_1", nome: "Mercadorias para revenda" },
+                { id: "1_2", nome: "Materias-primas e insumos de producao" },
+                { id: "1_3", nome: "Embalagens" },
+                { id: "1_4", nome: "Fretes sobre compras e vendas" }
+            ]},
+            { nome: "2. DESPESAS VINCULADAS A ATIVIDADE 2 - SERVICOS", itens: [
+                { id: "2_1", nome: "Materiais aplicados na prestacao de servicos" },
+                { id: "2_2", nome: "Servicos subcontratados de PJ" }
+            ]},
+            { nome: "3. DESPESAS COMUNS/ADMINISTRATIVAS COM CREDITO", itens: [
+                { id: "3_1", nome: "Energia eletrica" },
+                { id: "3_2", nome: "Aluguel de imovel (locador PJ)" },
+                { id: "3_3", nome: "Servicos tomados de PJ (TI, marketing...)" },
+                { id: "3_4", nome: "Telecomunicacoes" },
+                { id: "3_5", nome: "Combustiveis (regime monofasico)" },
+                { id: "3_6", nome: "Bens do ativo imobilizado" },
+                { id: "3_7", nome: "Outras despesas com credito" }
+            ]},
+            { nome: "4. DESPESAS SEM DIREITO A CREDITO", itens: [
+                { id: "4_1", nome: "Bens/servicos de USO E CONSUMO PESSOAL" },
+                { id: "4_2", nome: "Folha de salarios e pro-labore" },
+                { id: "4_3", nome: "Outras despesas sem credito" }
+            ]}
+        ];
+
+        var html = "";
+        for (var g = 0; g < grupos.length; g++) {
+            var grupo = grupos[g];
+            html += '<div class="card">';
+            html += '<div class="card-title">' + grupo.nome + '</div>';
+            html += '<div style="overflow-x:auto"><table>';
+            html += '<thead><tr>';
+            html += '<th>Categoria de despesa</th>';
+            html += '<th style="text-align:right">Valor mensal (R$)</th>';
+            html += '<th style="text-align:center">Credito? (S/N)</th>';
+            html += '<th style="text-align:right">% fornecedor reg. regular</th>';
+            html += '<th style="text-align:right">% reducao cClassTrib fornecedor</th>';
+            html += '<th style="text-align:right">Credito estimado (R$)</th>';
+            html += '</tr></thead><tbody>';
+
+            for (var i = 0; i < grupo.itens.length; i++) {
+                var item = grupo.itens[i];
+                html += '<tr>';
+                html += '<td>' + item.nome + '</td>';
+                html += '<td><input type="text" id="despesa_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right"></td>';
+                html += '<td style="text-align:center"><select id="despesa_cred_' + item.id + '" class="campo-amarelo calc-trigger"><option value="S">S</option><option value="N">N</option></select></td>';
+                html += '<td><input type="text" id="despesa_forn_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right"></td>';
+                html += '<td><input type="text" id="despesa_red_forn_' + item.id + '" class="campo-amarelo calc-trigger num-input" style="width:100%;box-sizing:border-box;text-align:right"></td>';
+                html += '<td class="num" id="despesa_result_' + item.id + '">R$ 0,00</td>';
+                html += '</tr>';
+            }
+
+            html += '<tr class="subtotal">';
+            html += '<td><strong>Subtotal</strong></td>';
+            html += '<td class="num" id="despesa_sub_valor_' + (g + 1) + '"><strong>R$ 0,00</strong></td>';
+            html += '<td colspan="3"></td>';
+            html += '<td class="num" id="despesa_sub_cred_' + (g + 1) + '"><strong>R$ 0,00</strong></td>';
+            html += '</tr>';
+
+            html += '</tbody></table></div></div>';
+        }
+
+        html += '<div class="card" style="background:linear-gradient(135deg,#0a0a23,#0d3b66);color:white;text-align:center">';
+        html += '<div class="grid-2">';
+        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">TOTAL GERAL DAS DESPESAS</div><div style="font-size:1.4rem;font-weight:700;margin-top:4px" id="despesa_total_geral">R$ 0,00</div></div>';
+        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">TOTAL DE DESPESAS COM DIREITO A CREDITO</div><div style="font-size:1.4rem;font-weight:700;margin-top:4px" id="despesa_total_creditavel">R$ 0,00</div></div>';
+        html += '</div></div>';
+
+        document.getElementById("despesas-content").innerHTML = html;
     },
 
     configurarAcoes: function() {
@@ -490,12 +565,23 @@ Simulador.App = {
             faixa2 = Simulador.SIMPLES_NACIONAL.encontrarFaixa(dados.atividades[1].anexo, dados.rbt12);
         }
 
-        var rbt12Calc = 0;
+        var receitaTotalMensal = 0;
         for (var i = 0; i < dados.atividades.length; i++) {
-            rbt12Calc += dados.atividades[i].receitaTotal * 12;
+            receitaTotalMensal += dados.atividades[i].receitaTotal;
         }
 
-        var coerencia = Math.abs(rbt12Calc - dados.rbt12) < 1 ? "OK" : "ATENCAO: RBT12 difere de 12x a receita mensal";
+        var sublimiteMsg = dados.rbt12 > 3600000 ? "ATENCAO: acima do sublimite -- ICMS/ISS ja fora do DAS" : "OK";
+        var elSublimite = document.getElementById("calc-sublimite");
+        if (elSublimite) elSublimite.textContent = sublimiteMsg;
+
+        var coerencia;
+        if (dados.rbt12 === 0 || receitaTotalMensal === 0) {
+            coerencia = "-";
+        } else if (Math.abs(dados.rbt12 - 12 * receitaTotalMensal) / dados.rbt12 > 0.2) {
+            coerencia = "ATENCAO: RBT12 difere de 12x a receita mensal -- a faixa/aliquota pode nao refletir o cliente";
+        } else {
+            coerencia = "OK";
+        }
 
         document.getElementById("calc-rbt12").textContent = Simulador.Format.moeda(dados.rbt12);
         document.getElementById("calc-coerencia").textContent = coerencia;
@@ -706,52 +792,31 @@ Simulador.App = {
 
     renderDespesas: function() {
         var info = this.despesasAtuais;
-        var html = "";
+        var F = Simulador.Format;
+
+        var grupoOffsets = [0, 4, 6, 13];
+        var grupoCounts = [4, 2, 7, 3];
+
+        for (var d = 0; d < info.despesas.length; d++) {
+            var despesa = info.despesas[d];
+            var gIdx = despesa.grupo - 1;
+            var localIdx = d - grupoOffsets[gIdx];
+            var el = document.getElementById("despesa_result_" + despesa.grupo + "_" + (localIdx + 1));
+            if (el) el.textContent = F.moeda(despesa.creditoEstimado);
+        }
 
         for (var s = 0; s < info.subtotais.length; s++) {
             var st = info.subtotais[s];
-            html += '<div class="card">';
-            html += '<div class="card-title">' + st.nome + '</div>';
-            html += '<table>';
-            html += '<thead><tr>';
-            html += '<th>Categoria de despesa</th>';
-            html += '<th style="text-align:right">Valor mensal (R$)</th>';
-            html += '<th style="text-align:center">Credito? (S/N)</th>';
-            html += '<th style="text-align:right">% fornecedor reg. regular</th>';
-            html += '<th style="text-align:right">% reducao cClassTrib fornecedor</th>';
-            html += '<th style="text-align:right">Credito estimado (R$)</th>';
-            html += '</tr></thead>';
-            html += '<tbody>';
-
-            for (var i = 0; i < st.itens.length; i++) {
-                var it = st.itens[i];
-                html += '<tr>';
-                html += '<td>' + it.nome + '</td>';
-                html += '<td class="num">' + Simulador.Format.moeda(it.valor) + '</td>';
-                html += '<td style="text-align:center">' + it.temCredito + '</td>';
-                html += '<td class="num">' + (it.temCredito === "S" ? Simulador.Format.percentual(it.percFornRegRegular) : "-") + '</td>';
-                html += '<td class="num">' + (it.temCredito === "S" ? Simulador.Format.percentual(it.percRedFornecedor) : "-") + '</td>';
-                html += '<td class="num">' + Simulador.Format.moeda(it.creditoEstimado) + '</td>';
-                html += '</tr>';
-            }
-
-            html += '<tr class="subtotal">';
-            html += '<td><strong>Subtotal</strong></td>';
-            html += '<td class="num"><strong>' + Simulador.Format.moeda(st.subtotalValor) + '</strong></td>';
-            html += '<td colspan="3"></td>';
-            html += '<td class="num"><strong>' + Simulador.Format.moeda(st.subtotalCredito) + '</strong></td>';
-            html += '</tr>';
-            html += '</tbody></table>';
-            html += '</div>';
+            var elSubV = document.getElementById("despesa_sub_valor_" + (s + 1));
+            var elSubC = document.getElementById("despesa_sub_cred_" + (s + 1));
+            if (elSubV) elSubV.innerHTML = "<strong>" + F.moeda(st.subtotalValor) + "</strong>";
+            if (elSubC) elSubC.innerHTML = "<strong>" + F.moeda(st.subtotalCredito) + "</strong>";
         }
 
-        html += '<div class="card" style="background:linear-gradient(135deg,#0a0a23,#0d3b66);color:white;text-align:center">';
-        html += '<div class="grid-2">';
-        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">TOTAL GERAL DAS DESPESAS</div><div style="font-size:1.4rem;font-weight:700;margin-top:4px">' + Simulador.Format.moeda(info.totalGeral) + '</div></div>';
-        html += '<div><div style="font-size:0.78rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em">TOTAL DE DESPESAS COM DIREITO A CREDITO</div><div style="font-size:1.4rem;font-weight:700;margin-top:4px">' + Simulador.Format.moeda(info.totalCreditavel) + '</div></div>';
-        html += '</div></div>';
-
-        document.getElementById("despesas-content").innerHTML = html;
+        var elTotalG = document.getElementById("despesa_total_geral");
+        var elTotalC = document.getElementById("despesa_total_creditavel");
+        if (elTotalG) elTotalG.textContent = F.moeda(info.totalGeral);
+        if (elTotalC) elTotalC.textContent = F.moeda(info.totalCreditavel);
     },
 
     renderComparativo: function() {
