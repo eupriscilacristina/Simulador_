@@ -20,7 +20,7 @@
             <img src="rtc.png" alt="Logo" class="header-logo">
             <div>
                 <h1>Simulador Reforma Tributária</h1>
-                <div class="subtitle">IBS/CBS no PGDAS x Hibrido - LC 214/2025 / EC 132/2023 - v3</div>
+                <div class="subtitle">IBS/CBS no PGDAS x Híbrido - LC 214/2025 / EC 132/2023 - v3</div>
             </div>
         </div>
     </header>
@@ -30,10 +30,10 @@
             <button class="tab-btn active" data-tab="leia">Leia-me</button>
             <button class="tab-btn" data-tab="dados">Dados</button>
             <button class="tab-btn" data-tab="despesas">Despesas</button>
-            <button class="tab-btn" data-tab="cen1">Cenario 1 - PGDAS</button>
-            <button class="tab-btn" data-tab="cen2">Cenario 2 - Hibrido</button>
+            <button class="tab-btn" data-tab="cen1">Cenário 1 - PGDAS</button>
+            <button class="tab-btn" data-tab="cen2">Cenário 2 - Híbrido</button>
             <button class="tab-btn" data-tab="comparativo">Comparativo</button>
-            <button class="tab-btn" data-tab="parametros">Parametros</button>
+            <button class="tab-btn" data-tab="parametros">Parâmetros</button>
             <button class="tab-btn" data-tab="confronto">Confronto Simples</button>
         </div>
 
@@ -46,8 +46,8 @@
                         <h4>1. Objetivo</h4>
                         <p>Comparar, para optantes do Simples Nacional, as duas estrategias do art. 41 da LC 214/2025:</p>
                         <ul>
-                            <li><strong>CENARIO 1 - PGDAS:</strong> IBS/CBS recolhidos por dentro do PGDAS-D.</li>
-                            <li><strong>CENARIO 2 - HIBRIDO:</strong> Demais tributos no Simples + IBS/CBS apurados por fora (regime regular), com reducoes de alquota do cClassTrib nas vendas e creditos sobre as despesas detalhadas.</li>
+                            <li><strong>CENÁRIO 1 - PGDAS:</strong> IBS/CBS recolhidos por dentro do PGDAS-D.</li>
+                            <li><strong>CENÁRIO 2 - HÍBRIDO:</strong> Demais tributos no Simples + IBS/CBS apurados por fora (regime regular), com reducoes de alquota do cClassTrib nas vendas e creditos sobre as despesas detalhadas.</li>
                         </ul>
                     </div>
                     <div class="leia-me-section">
@@ -55,14 +55,14 @@
                         <ul>
                             <li>Preencha somente os campos em amarelo nas abas <strong>Dados</strong> e <strong>Despesas</strong>.</li>
                             <li>Escolha o ano (2027 a 2033).</li>
-                            <li>As abas <strong>Cen1_PGDAS</strong> e <strong>Cen2_Hibrido</strong> calculam automaticamente.</li>
+                            <li>As abas <strong>Cen1_PGDAS</strong> e <strong>Cen2_Híbrido</strong> calculam automaticamente.</li>
                             <li>A aba <strong>Comparativo</strong> consolida e indica a estrategia.</li>
                         </ul>
                     </div>
                     <div class="leia-me-section">
                         <h4>3. Variaveis que Decidem o Jogo</h4>
                         <ul>
-                            <li>% de vendas B2B para clientes do regime regular (no hibrido o cliente credita o IBS/CBS destacado).</li>
+                            <li>% de vendas B2B para clientes do regime regular (no híbrido o cliente credita o IBS/CBS destacado).</li>
                             <li>cClassTrib das vendas: reducoes so valem por fora.</li>
                             <li>Volume e perfil das despesas com credito.</li>
                             <li>Receitas segregadas (ST/monofasico) perdem o beneficio gradualmente no Cenario 1.</li>
@@ -299,7 +299,7 @@
                     <div class="form-group">
                         <label>% das vendas B2B para clientes do regime regular (aproveitam credito)</label>
                         <input type="text" id="percB2B" class="campo-amarelo calc-trigger num-input pct-input">
-                        <div class="help-text">Variavel decisiva: no hibrido o cliente credita o IBS/CBS destacado.</div>
+                        <div class="help-text">Variável decisiva: no híbrido o cliente credita o IBS/CBS destacado.</div>
                     </div>
                 </div>
             </div>
@@ -357,8 +357,8 @@
                         <thead>
                             <tr>
                                 <th style="width:40%">Indicador</th>
-                                <th style="width:20%;text-align:right">CENARIO 1 - Tudo no PGDAS</th>
-                                <th style="width:20%;text-align:right">CENARIO 2 - Hibrido (por fora)</th>
+                                <th style="width:20%;text-align:right">CENÁRIO 1 - Tudo no PGDAS</th>
+                                <th style="width:20%;text-align:right">CENÁRIO 2 - Híbrido (por fora)</th>
                                 <th style="width:20%;text-align:right">Diferenca (C2 - C1)</th>
                             </tr>
                         </thead>
@@ -406,7 +406,7 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td>Saldo credor mensal no hibrido (se houver)</td>
+                                <td>Saldo credor mensal no híbrido (se houver)</td>
                                 <td class="num">n/a</td>
                                 <td class="num" id="comp-saldo-credor">-</td>
                                 <td></td>
@@ -414,7 +414,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="help-text" style="margin-top:8px">Valores negativos na coluna Diferenca = hibrido melhor.</div>
+                <div class="help-text" style="margin-top:8px">Valores negativos na coluna Diferença = híbrido melhor.</div>
             </div>
 
             <!-- Leitura dos Resultados -->
@@ -422,11 +422,11 @@
                 <div class="card-title">Leitura dos Resultados</div>
                 <div class="grid-2" style="margin-bottom:12px">
                     <div class="form-group">
-                        <label>Qual cenario custa menos PARA A EMPRESA?</label>
+                        <label>Qual cenário custa menos PARA A EMPRESA?</label>
                         <div class="resultado-campo" id="comp-melhor-empresa">-</div>
                     </div>
                     <div class="form-group">
-                        <label>Qual cenario custa menos PARA A CADEIA?</label>
+                        <label>Qual cenário custa menos PARA A CADEIA?</label>
                         <div class="resultado-campo" id="comp-melhor-cadeia">-</div>
                     </div>
                 </div>
@@ -442,8 +442,8 @@
             <div class="card">
                 <div class="card-title">Drivers da Decisao (teste nas abas Dados e Despesas)</div>
                 <ul style="font-size:0.82rem;line-height:1.8;padding-left:20px">
-                    <li>cClassTrib com reducao (30%/60%) ou aliquota zero nas VENDAS so beneficia quem esta POR FORA: derruba o debito do hibrido, mantem os creditos das compras e pode gerar saldo credor.</li>
-                    <li>Maior % vendas B2B para regime regular e mais despesas com credito favorecem o HIBRIDO.</li>
+                    <li>cClassTrib com reducao (30%/60%) ou aliquota zero nas VENDAS so beneficia quem esta POR FORA: derruba o débito do híbrido, mantém os créditos das compras e pode gerar saldo credor.</li>
+                    <li>Maior % vendas B2B para regime regular e mais despesas com credito favorecem o HÍBRIDO.</li>
                     <li>Maior vendas B2C, maior margem (pouco insumo) e cClassTrib integral (000001) favorecem o PGDAS.</li>
                     <li>Receitas segregadas (ST/monofasico) perdem o beneficio gradualmente no Cenario 1 - recalcule a cada ano da transicao (2027-2033).</li>
                     <li>Bares e restaurantes (regime especifico - arts. 273-276): use o codigo RED-40-BAR-REST (red. 40%), marque 'N' em 'vendas geram credito ao adquirente' e lance gorjetas repassadas/retencoes de delivery nas exclusoes da base.</li>
