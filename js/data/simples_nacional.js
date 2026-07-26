@@ -71,6 +71,6 @@ Simulador.SIMPLES_NACIONAL = {
 
     calcAliqEfetiva: function(rbt12, faixa) {
         if (rbt12 <= 0) return 0;
-        return ((rbt12 * faixa.aliqNominal) - faixa.parcelaDeduzir) / rbt12;
+        return Math.max(((rbt12 * faixa.aliqNominal) - faixa.parcelaDeduzir) / rbt12, 0);
     }
 };
