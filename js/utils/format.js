@@ -47,9 +47,9 @@ Simulador.Format = {
     },
 
     corDiferenca: function(valor) {
-        if (valor < -0.001) return "positivo";
-        if (valor > 0.001) return "negativo";
-        return "neutro";
+        if (valor < -0.001) return "num pos";
+        if (valor > 0.001) return "num neg";
+        return "num neu";
     },
 
     sinal: function(valor) {
