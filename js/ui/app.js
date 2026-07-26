@@ -784,6 +784,19 @@ Simulador.App = {
         html += ' + creditos sobre despesas detalhadas.';
         html += '</div>';
 
+        // Dados gerais da simulacao
+        html += '<div class="card">';
+        html += '<div class="card-title">Dados da Simulacao</div>';
+        html += '<div class="grid-3">';
+        html += '<div class="form-group"><label>Ano da simulacao</label><div class="resultado-campo">' + res.ano + '</div></div>';
+        html += '<div class="form-group"><label>Fase CBS (PIS/COFINS -> CBS)</label><div class="resultado-campo">' + Simulador.Format.percentual(res.faseCBS) + '</div></div>';
+        html += '<div class="form-group"><label>Fase IBS (ICMS/ISS -> IBS)</label><div class="resultado-campo">' + Simulador.Format.percentual(res.faseIBS) + '</div></div>';
+        html += '</div>';
+        html += '<div class="grid-2" style="margin-top:8px">';
+        html += '<div class="form-group"><label>Aliquota IBS/CBS CHEIA vigente no ano (sem reducao)</label><div class="resultado-campo">' + Simulador.Format.percentual(res.aliqCheia) + '</div></div>';
+        html += '</div>';
+        html += '</div>';
+
         // Tabela principal
         html += '<div class="card">';
         html += '<div class="card-title">Apuracao por Atividade - DAS Reduzido e Debito por Fora</div>';
