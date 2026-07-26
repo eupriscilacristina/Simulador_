@@ -737,9 +737,9 @@ Simulador.App = {
 
         html += this.linhaTabela("Anexo", at1 ? at1.anexo : "-", at2 ? at2.anexo : "-");
         html += this.linhaTabela("Receita mensal (R$)", at1 ? Simulador.Format.moeda(at1.receitaTotal) : "-", at2 ? Simulador.Format.moeda(at2.receitaTotal) : "-");
-        html += this.linhaTabela("Alquota NOMINAL da faixa", at1 ? Simulador.Format.percentual(at1.aliqNominal) : "-", at2 ? Simulador.Format.percentual(at2.aliqNominal) : "-");
+        html += this.linhaTabela("Aliquota NOMINAL da faixa (so referencia)", at1 ? Simulador.Format.percentual(at1.aliqNominal) : "-", at2 ? Simulador.Format.percentual(at2.aliqNominal) : "-");
         html += this.linhaTabela("Parcela a deduzir (R$)", at1 ? Simulador.Format.moeda(at1.parcelaDeduzir) : "-", at2 ? Simulador.Format.moeda(at2.parcelaDeduzir) : "-");
-        html += this.linhaTabela("ALIQUOTA EFETIVA do Simples", at1 ? Simulador.Format.percentual(at1.aliqEfetiva) : "-", at2 ? Simulador.Format.percentual(at2.aliqEfetiva) : "-");
+        html += this.linhaTabela("ALIQUOTA EFETIVA do Simples (usada no calculo)", at1 ? Simulador.Format.percentual(at1.aliqEfetiva) : "-", at2 ? Simulador.Format.percentual(at2.aliqEfetiva) : "-");
         html += this.linhaTabela("% da aliq. destinado a PIS/COFINS (->CBS)", at1 ? Simulador.Format.percentual(at1.percPisCofins) : "-", at2 ? Simulador.Format.percentual(at2.percPisCofins) : "-");
         html += this.linhaTabela("% da aliq. destinado a ICMS/ISS (->IBS)", at1 ? Simulador.Format.percentual(at1.percIcmsIss) : "-", at2 ? Simulador.Format.percentual(at2.percIcmsIss) : "-");
 
@@ -758,9 +758,9 @@ Simulador.App = {
         html += '<tr class="subtotal"><td colspan="3"></td></tr>';
 
         html += this.linhaTabelaDestaque("DAS MENSAL DA ATIVIDADE (R$)", at1 ? Simulador.Format.moeda(at1.dasTotal) : "-", at2 ? Simulador.Format.moeda(at2.dasReduzido) : "-");
-        html += this.linhaTabela("Credito de IBS/CBS transferivel (total, R$)", at1 ? Simulador.Format.moeda(at1.creditoTotal) : "-", at2 ? Simulador.Format.moeda(at2.debitoIBSCBS) : "-");
+        html += this.linhaTabela("Credito de IBS/CBS transferivel aos clientes (total, R$)", at1 ? Simulador.Format.moeda(at1.creditoTotal) : "-", at2 ? Simulador.Format.moeda(at2.debitoIBSCBS) : "-");
         html += this.linhaTabela("Credito transferivel - so vendas B2B (R$)", at1 ? Simulador.Format.moeda(at1.creditoB2B) : "-", at2 ? Simulador.Format.moeda(at2.creditoB2B) : "-");
-        html += this.linhaTabela("Faixa da tabela aplicada", at1 ? at1.faixa : "-", at2 ? at2.faixa : "-");
+        html += this.linhaTabela("Faixa da tabela aplicada (confira na aba Confronto_Simples)", at1 ? at1.faixa : "-", at2 ? at2.faixa : "-");
 
         html += '</tbody></table>';
         html += '</div></div>';
