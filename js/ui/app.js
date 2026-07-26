@@ -745,20 +745,20 @@ Simulador.App = {
 
         html += '<tr class="subtotal"><td colspan="3"></td></tr>';
 
-        html += this.linhaTabela("Receita sem concentracao (R$)", at1 ? Simulador.Format.moeda(at1.receitaSemConcentracao) : "-", at2 ? Simulador.Format.moeda(at2.receitaNormal) : "-");
+        html += this.linhaTabela("Receita sem concentracao (R$)", at1 ? Simulador.Format.moeda(at1.receitaSemConcentracao) : "-", at2 ? Simulador.Format.moeda(at2.receitaSemConcentracao) : "-");
         html += this.linhaTabela("Receita com ICMS-ST (R$)", at1 ? Simulador.Format.moeda(at1.receitaST) : "-", at2 ? Simulador.Format.moeda(at2.receitaST) : "-");
         html += this.linhaTabela("Receita monofasica (R$)", at1 ? Simulador.Format.moeda(at1.receitaMono) : "-", at2 ? Simulador.Format.moeda(at2.receitaMono) : "-");
 
         html += '<tr class="subtotal"><td colspan="3"></td></tr>';
 
-        html += this.linhaTabela("Aliq. DAS s/ receita normal", at1 ? Simulador.Format.percentual(at1.aliqDasNormal) : "-", at2 ? Simulador.Format.percentual(at2.aliqDASNormalReduzida) : "-");
-        html += this.linhaTabela("Aliq. DAS s/ receita ST", at1 ? Simulador.Format.percentual(at1.aliqDasST) : "-", at2 ? Simulador.Format.percentual(at2.aliqDASSTReducida) : "-");
-        html += this.linhaTabela("Aliq. DAS s/ receita monofasica", at1 ? Simulador.Format.percentual(at1.aliqDasMono) : "-", at2 ? Simulador.Format.percentual(at2.aliqDASMonoReduzida) : "-");
+        html += this.linhaTabela("Aliq. DAS s/ receita normal", at1 ? Simulador.Format.percentual(at1.aliqDasNormal) : "-", at2 ? Simulador.Format.percentual(at2.aliqDasNormal) : "-");
+        html += this.linhaTabela("Aliq. DAS s/ receita ST", at1 ? Simulador.Format.percentual(at1.aliqDasST) : "-", at2 ? Simulador.Format.percentual(at2.aliqDasST) : "-");
+        html += this.linhaTabela("Aliq. DAS s/ receita monofasica", at1 ? Simulador.Format.percentual(at1.aliqDasMono) : "-", at2 ? Simulador.Format.percentual(at2.aliqDasMono) : "-");
 
         html += '<tr class="subtotal"><td colspan="3"></td></tr>';
 
-        html += this.linhaTabelaDestaque("DAS MENSAL DA ATIVIDADE (R$)", at1 ? Simulador.Format.moeda(at1.dasTotal) : "-", at2 ? Simulador.Format.moeda(at2.dasReduzido) : "-");
-        html += this.linhaTabela("Credito de IBS/CBS transferivel aos clientes (total, R$)", at1 ? Simulador.Format.moeda(at1.creditoTotal) : "-", at2 ? Simulador.Format.moeda(at2.debitoIBSCBS) : "-");
+        html += this.linhaTabelaDestaque("DAS MENSAL DA ATIVIDADE (R$)", at1 ? Simulador.Format.moeda(at1.dasTotal) : "-", at2 ? Simulador.Format.moeda(at2.dasTotal) : "-");
+        html += this.linhaTabela("Credito de IBS/CBS transferivel aos clientes (total, R$)", at1 ? Simulador.Format.moeda(at1.creditoTotal) : "-", at2 ? Simulador.Format.moeda(at2.creditoTotal) : "-");
         html += this.linhaTabela("Credito transferivel - so vendas B2B (R$)", at1 ? Simulador.Format.moeda(at1.creditoB2B) : "-", at2 ? Simulador.Format.moeda(at2.creditoB2B) : "-");
         html += this.linhaTabela("Faixa da tabela aplicada (confira na aba Confronto_Simples)", at1 ? at1.faixa : "-", at2 ? at2.faixa : "-");
 
