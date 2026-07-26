@@ -913,27 +913,22 @@ Simulador.App = {
         document.getElementById("comp-carga-mensal-c1").textContent = F.moeda(c.cargaPropriaMensalC1);
         document.getElementById("comp-carga-mensal-c2").textContent = F.moeda(c.cargaPropriaMensalC2);
         document.getElementById("comp-diff-mensal").textContent = F.sinal(c.diffMensal) + F.moedaNegativo(c.diffMensal);
-        document.getElementById("comp-diff-mensal").className = F.corDiferenca(c.diffMensal);
 
         document.getElementById("comp-carga-anual-c1").textContent = F.moeda(c.cargaPropriaAnualC1);
         document.getElementById("comp-carga-anual-c2").textContent = F.moeda(c.cargaPropriaAnualC2);
         document.getElementById("comp-diff-anual").textContent = F.sinal(c.diffAnual) + F.moedaNegativo(c.diffAnual);
-        document.getElementById("comp-diff-anual").className = F.corDiferenca(c.diffAnual);
 
         document.getElementById("comp-perc-c1").textContent = F.percentual(c.percPropriaC1);
         document.getElementById("comp-perc-c2").textContent = F.percentual(c.percPropriaC2);
         document.getElementById("comp-diff-perc").textContent = F.sinal(c.diffPerc) + F.percentual(c.diffPerc);
-        document.getElementById("comp-diff-perc").className = F.corDiferenca(c.diffPerc);
 
         document.getElementById("comp-cred-c1").textContent = F.moeda(c.creditoB2BC1);
         document.getElementById("comp-cred-c2").textContent = F.moeda(c.creditoB2BC2);
         document.getElementById("comp-diff-cred").textContent = F.sinal(c.diffCredito) + F.moedaNegativo(c.diffCredito);
-        document.getElementById("comp-diff-cred").className = F.corDiferenca(-c.diffCredito);
 
         document.getElementById("comp-liq-c1").textContent = F.moeda(c.cargaLiquidaC1);
         document.getElementById("comp-liq-c2").textContent = F.moeda(c.cargaLiquidaC2);
         document.getElementById("comp-diff-liq").textContent = F.sinal(c.diffLiquida) + F.moedaNegativo(c.diffLiquida);
-        document.getElementById("comp-diff-liq").className = F.corDiferenca(c.diffLiquida);
 
         document.getElementById("comp-aliq-nf-c2").textContent = F.percentual(c.aliqVendaAtiv1);
         var elAliqNfC2b = document.getElementById("comp-aliq-nf-c2b");
