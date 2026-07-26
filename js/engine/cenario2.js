@@ -48,7 +48,7 @@ Simulador.Cenario2 = {
         for (var b = 0; b < resultado.atividades.length; b++) {
             creditoTotalB2B += resultado.atividades[b].creditoB2B;
         }
-        resultado.creditoTotalB2B = creditoTotalB2B;
+        resultado.creditoTotalB2B = creditoTotalB2B * dados.percB2B;
         return resultado;
     },
 
@@ -60,14 +60,9 @@ Simulador.Cenario2 = {
 
         var aliqDASNormal = aliqEf * (1 - percPis * fase.faseCBS - percIcms * fase.faseIBS);
 
-        var aliqDASST;
-        if (fase.faseIBS >= 1) {
-            aliqDASST = aliqDASNormal;
-        } else {
-            aliqDASST = aliqEf * (1 - percPis * fase.faseCBS - percIcms * ((1 - fase.faseIBS) + fase.faseIBS * ativ.percPermanece));
-        }
+        var aliqDASST = aliqEf * (1 - percPis * fase.faseCBS - percIcms);
 
-        var aliqDASMono = aliqEf * (1 - percPis * fase.faseCBS - percIcms * fase.faseIBS);
+        var aliqDASMono = aliqDASNormal;
 
         var receitaNormal = ativ.receitaTotal - ativ.receitaST - ativ.receitaMono;
         var dasNormal = receitaNormal * aliqDASNormal;
@@ -100,7 +95,8 @@ Simulador.Cenario2 = {
         basePorFora = Math.max(0, basePorFora);
 
         var debitoIBSCBS = basePorFora * aliqVenda;
-        var creditoB2B = debitoIBSCBS;
+        var podeCredito = ativ.vendasCreditoAdquirente === "S" ? 1 : 0;
+        var creditoB2B = podeCredito * debitoIBSCBS;
 
         return {
             anexo: ativ.anexo,

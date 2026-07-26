@@ -47,7 +47,8 @@ Simulador.Cenario1 = {
         var cbsST = aliqEf * (ativ.receitaST * (percPis * fase.faseCBS + percIcms * fase.faseIBS * (1 - ativ.percPermanece)));
         var cbsMono = aliqEf * (ativ.receitaMono * (percPis * fase.faseCBS * (1 - ativ.percPermanece) + percIcms * fase.faseIBS));
         var creditoTotal = cbsNormal + cbsST + cbsMono;
-        var creditoB2B = creditoTotal * percB2B;
+        var podeCredito = ativ.vendasCreditoAdquirente === "S" ? 1 : 0;
+        var creditoB2B = podeCredito * creditoTotal * percB2B;
 
         return {
             anexo: ativ.anexo,
