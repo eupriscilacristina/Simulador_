@@ -3,7 +3,7 @@ var Simulador = Simulador || {};
 Simulador.SIMPLES_NACIONAL = {
     anexos: {
         I: {
-            nome: "Comercio",
+            nome: "Comércio",
             faixas: [
                 { faixa: 1, rbt12De: 0,         rbt12Ate: 180000,     aliqNominal: 0.04,  parcelaDeduzir: 0,      percPermanece: 0.505, percPisCofins: 0.155, percIcmsIss: 0.34  },
                 { faixa: 2, rbt12De: 180000.01,  rbt12Ate: 360000,     aliqNominal: 0.073, parcelaDeduzir: 5940,   percPermanece: 0.505, percPisCofins: 0.155, percIcmsIss: 0.34  },
@@ -14,7 +14,7 @@ Simulador.SIMPLES_NACIONAL = {
             ]
         },
         II: {
-            nome: "Industria",
+            nome: "Indústria",
             faixas: [
                 { faixa: 1, rbt12De: 0,         rbt12Ate: 180000,     aliqNominal: 0.045, parcelaDeduzir: 0,      percPermanece: 0.54, percPisCofins: 0.14, percIcmsIss: 0.32 },
                 { faixa: 2, rbt12De: 180000.01,  rbt12Ate: 360000,     aliqNominal: 0.078, parcelaDeduzir: 5940,   percPermanece: 0.54, percPisCofins: 0.14, percIcmsIss: 0.32 },
@@ -25,7 +25,7 @@ Simulador.SIMPLES_NACIONAL = {
             ]
         },
         III: {
-            nome: "Servicos",
+            nome: "Serviços",
             faixas: [
                 { faixa: 1, rbt12De: 0,         rbt12Ate: 180000,     aliqNominal: 0.06,  parcelaDeduzir: 0,      percPermanece: 0.509, percPisCofins: 0.156, percIcmsIss: 0.335 },
                 { faixa: 2, rbt12De: 180000.01,  rbt12Ate: 360000,     aliqNominal: 0.112, parcelaDeduzir: 9360,   percPermanece: 0.509, percPisCofins: 0.171, percIcmsIss: 0.32  },
@@ -36,7 +36,7 @@ Simulador.SIMPLES_NACIONAL = {
             ]
         },
         IV: {
-            nome: "Servicos",
+            nome: "Serviços",
             faixas: [
                 { faixa: 1, rbt12De: 0,         rbt12Ate: 180000,     aliqNominal: 0.045, parcelaDeduzir: 0,      percPermanece: 0.34,  percPisCofins: 0.215, percIcmsIss: 0.445 },
                 { faixa: 2, rbt12De: 180000.01,  rbt12Ate: 360000,     aliqNominal: 0.09,  parcelaDeduzir: 8100,   percPermanece: 0.35,  percPisCofins: 0.25,  percIcmsIss: 0.4   },
@@ -47,7 +47,7 @@ Simulador.SIMPLES_NACIONAL = {
             ]
         },
         V: {
-            nome: "Servicos",
+            nome: "Serviços",
             faixas: [
                 { faixa: 1, rbt12De: 0,         rbt12Ate: 180000,     aliqNominal: 0.155, parcelaDeduzir: 0,      percPermanece: 0.6885, percPisCofins: 0.1715, percIcmsIss: 0.14  },
                 { faixa: 2, rbt12De: 180000.01,  rbt12Ate: 360000,     aliqNominal: 0.18,  parcelaDeduzir: 4500,   percPermanece: 0.6585, percPisCofins: 0.1715, percIcmsIss: 0.17  },

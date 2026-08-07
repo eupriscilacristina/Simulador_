@@ -42,11 +42,11 @@ Simulador.Comparativo = {
 
         var recomendar;
         if (nomeMelhor === "HIBRIDO") {
-            recomendar = "HIBRIDO: menor carga propria E maior competitividade junto a clientes B2B.";
+            recomendar = "HÍBRIDO: menor carga própria e maior competitividade junto a clientes B2B.";
         } else if (nomeMelhor === "PGDAS") {
-            recomendar = "PGDAS: menor carga propria e sem complexidade de apuracao por fora.";
+            recomendar = "PGDAS: menor carga própria e sem complexidade de apuração por fora.";
         } else {
-            recomendar = "CENARIOS EQUIVALENTES. Avalie a complexidade operacional.";
+            recomendar = "CENÁRIOS EQUIVALENTES. Avalie a complexidade operacional.";
         }
 
         return {

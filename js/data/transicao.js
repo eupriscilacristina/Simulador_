@@ -26,15 +26,15 @@ Simulador.ALICOTAS_REFERENCIA = {
 };
 
 Simulador.CCLASSTRIB = [
-    { codigo: "000001",         cst: "200", desc: "Tributacao integral - regra geral",                              pRedIBS: 0,   pRedCBS: 0,   baseLegal: "art. 10"           },
-    { codigo: "200003",         cst: "200", desc: "Produtos destinados a alimentacao humana (red. 60%)",             pRedIBS: 0.6, pRedCBS: 0.6, baseLegal: "art. 137 / Anexo"   },
-    { codigo: "200004",         cst: "200", desc: "Dispositivos medicos (red. 60%)",                                pRedIBS: 0.6, pRedCBS: 0.6, baseLegal: "art. 137 / Anexo"   },
-    { codigo: "200039",         cst: "200", desc: "Producoes artisticas, culturais e eventos - Anexo X (red. 60%)", pRedIBS: 0.6, pRedCBS: 0.6, baseLegal: "art. 137 / Anexo X" },
-    { codigo: "RED-60",         cst: "200", desc: "Generico - alquota reduzida em 60% (saude, educacao, agro etc.)", pRedIBS: 0.6, pRedCBS: 0.6, baseLegal: "arts. 128-145"     },
-    { codigo: "RED-30",         cst: "200", desc: "Generico - profissoes intelectuais regulamentadas (red. 30%)",   pRedIBS: 0.3, pRedCBS: 0.3, baseLegal: "art. 127"          },
-    { codigo: "ALIQ-ZERO",      cst: "200", desc: "Generico - alquota zero (cesta basica nacional etc.)",           pRedIBS: 1,   pRedCBS: 1,   baseLegal: "arts. 125-126"      },
-    { codigo: "RED-40-BAR-REST",cst: "200", desc: "Bares, restaurantes e lanchonetes - regime especifico (red. 40%)", pRedIBS: 0.4, pRedCBS: 0.4, baseLegal: "arts. 273-276"   },
-    { codigo: "RED-40-HOTEL",   cst: "200", desc: "Hotelaria, parques de diversao e tematicos (red. 40%)",          pRedIBS: 0.4, pRedCBS: 0.4, baseLegal: "regime especifico" }
+    { codigo: "000001",         cst: "200", desc: "Tributação integral - regra geral",                              pRedIBS: 0,   pRedCBS: 0,   baseLegal: "art. 10"           },
+    { codigo: "200003",         cst: "200", desc: "Produtos destinados a alimentação humana (red. 60%)",             pRedIBS: 0.6, pRedCBS: 0.6, baseLegal: "art. 137 / Anexo"   },
+    { codigo: "200004",         cst: "200", desc: "Dispositivos médicos (red. 60%)",                                pRedIBS: 0.6, pRedCBS: 0.6, baseLegal: "art. 137 / Anexo"   },
+    { codigo: "200039",         cst: "200", desc: "Produções artísticas, culturais e eventos - Anexo X (red. 60%)", pRedIBS: 0.6, pRedCBS: 0.6, baseLegal: "art. 137 / Anexo X" },
+    { codigo: "RED-60",         cst: "200", desc: "Genérico - alíquota reduzida em 60% (saúde, educação, agro etc.)", pRedIBS: 0.6, pRedCBS: 0.6, baseLegal: "arts. 128-145"     },
+    { codigo: "RED-30",         cst: "200", desc: "Genérico - profissões intelectuais regulamentadas (red. 30%)",   pRedIBS: 0.3, pRedCBS: 0.3, baseLegal: "art. 127"          },
+    { codigo: "ALIQ-ZERO",      cst: "200", desc: "Genérico - alíquota zero (cesta básica nacional etc.)",           pRedIBS: 1,   pRedCBS: 1,   baseLegal: "arts. 125-126"      },
+    { codigo: "RED-40-BAR-REST",cst: "200", desc: "Bares, restaurantes e lanchonetes - regime específico (red. 40%)", pRedIBS: 0.4, pRedCBS: 0.4, baseLegal: "arts. 273-276"   },
+    { codigo: "RED-40-HOTEL",   cst: "200", desc: "Hotelaria, parques de diversão e temáticos (red. 40%)",          pRedIBS: 0.4, pRedCBS: 0.4, baseLegal: "regime específico" }
 ];
 
 Simulador.buscarCClassTrib = function(codigo) {
