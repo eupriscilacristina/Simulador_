@@ -170,6 +170,46 @@ Simulador.App = {
                 Simulador.App.exportar();
             });
         }
+        var btnRestaurar = document.getElementById("btn-restaurar");
+        if (btnRestaurar) {
+            btnRestaurar.addEventListener("click", function() {
+                if (confirm("Restaurar os valores iniciais do exemplo? O preenchimento atual será perdido.")) {
+                    Simulador.App.restaurarDados();
+                }
+            });
+        }
+        var btnZerar = document.getElementById("btn-zerar");
+        if (btnZerar) {
+            btnZerar.addEventListener("click", function() {
+                if (confirm("Zerar todos os dados? O preenchimento atual será perdido.")) {
+                    Simulador.App.zerarDados();
+                }
+            });
+        }
+    },
+
+    zerarDados: function() {
+        var inputs = document.querySelectorAll(".campo-amarelo, .calc-trigger");
+        for (var i = 0; i < inputs.length; i++) {
+            var el = inputs[i];
+            if (el.tagName === "SELECT") {
+                el.value = el.options[0].value;
+            } else if (el.classList.contains("pct-input")) {
+                el.value = "0%";
+            } else if (el.classList.contains("num-input")) {
+                el.value = "R$ 0,00";
+            } else {
+                el.value = "";
+            }
+        }
+        this.atualizarCClassTribDisplay();
+        this.calcular();
+    },
+
+    restaurarDados: function() {
+        this.preencherDefaults(true);
+        this.atualizarCClassTribDisplay();
+        this.calcular();
     },
 
     configurarMascaraMoeda: function() {
@@ -252,7 +292,8 @@ Simulador.App = {
         campo.value = pct.toFixed(casas).replace(".", ",") + "%";
     },
 
-    preencherDefaults: function() {
+    preencherDefaults: function(force) {
+        this._forceDefaults = !!force;
         this.setValueIfEmpty("cliente", "PLANT FLOR");
         this.setValueIfEmpty("ano", "2027");
         this.setValueIfEmpty("rbt12", "R$ 822.015,76");
@@ -343,11 +384,12 @@ Simulador.App = {
         this.setValueIfEmpty("despesa_cred_4_3", "N");
         this.setValueIfEmpty("despesa_forn_4_3", "0%");
         this.setValueIfEmpty("despesa_red_forn_4_3", "0%");
+        this._forceDefaults = false;
     },
 
     setValueIfEmpty: function(id, val) {
         var el = document.getElementById(id);
-        if (el && (!el.value || el.value === "")) {
+        if (el && (this._forceDefaults || !el.value || el.value === "")) {
             el.value = val;
         }
     },
