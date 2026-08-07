@@ -197,23 +197,14 @@ Simulador.App = {
         var antigo = campo.value;
         var lenAntigo = antigo.length;
 
-        var texto = antigo.replace(/[R$\s]/g, "");
-        var sepIndex = Math.max(texto.lastIndexOf(","), texto.lastIndexOf("."));
-        var pendente = sepIndex === texto.length - 1;
+        var digitos = antigo.replace(/[^\d]/g, "").slice(0, 15);
+        while (digitos.length < 3) digitos = "0" + digitos;
 
-        var inteiroTexto = (sepIndex >= 0 ? texto.slice(0, sepIndex) : texto).replace(/[^\d]/g, "");
-        var decimal = sepIndex >= 0 ? texto.slice(sepIndex + 1).replace(/[^\d]/g, "").slice(0, 2) : "";
-
-        var inteiro = parseInt(inteiroTexto || "0", 10);
+        var centavos = digitos.slice(-2);
+        var inteiro = parseInt(digitos.slice(0, -2) || "0", 10);
         var inteiroFormatado = inteiro.toLocaleString("pt-BR");
 
-        if (pendente) {
-            campo.value = "R$ " + inteiroFormatado + ",";
-        } else if (decimal) {
-            campo.value = "R$ " + inteiroFormatado + "," + decimal;
-        } else {
-            campo.value = "R$ " + inteiroFormatado;
-        }
+        campo.value = "R$ " + inteiroFormatado + "," + centavos;
 
         var diff = campo.value.length - lenAntigo;
         var novaPos = cursor + diff;
